@@ -1,43 +1,67 @@
-# Astro Starter Kit: Minimal
+# Komodo Labs — Portfolio Site
 
-```sh
-npm create astro@latest -- --template minimal
+Personal portfolio and project showcase for [Komodo Labs](https://komodolabs.io). Built with Astro, vanilla CSS, and zero UI frameworks.
+
+---
+
+## Structure
+
 ```
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
 /
 ├── public/
+│   └── headshot.jpg
 ├── src/
+│   ├── components/
+│   │   ├── Nav.astro       # Shared navigation
+│   │   └── Footer.astro    # Shared footer
+│   ├── data/
+│   │   └── projects.json   # Project list — edit this to add/update projects
 │   └── pages/
-│       └── index.astro
+│       ├── index.astro     # Home page
+│       ├── projects.astro  # Projects table
+│       └── about.astro     # About page
+├── .env                    # Environment variables (not committed)
 └── package.json
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+### Adding a project
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Open `src/data/projects.json` and add an entry:
 
-Any static assets, like images, can be placed in the `public/` directory.
+```json
+{
+  "name": "Project Name",
+  "description": "What it does.",
+  "labels": ["Solidity", "AI"],
+  "status": "live",
+  "repo": "https://github.com/org/repo",
+  "website": "https://example.com"
+}
+```
 
-## 🧞 Commands
+**Status options:** `live` · `in-progress` · `complete`
 
-All commands are run from the root of the project, from a terminal:
+Set `repo` or `website` to `null` if not applicable — icons won't render.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+---
 
-## 👀 Want to learn more?
+## Environment Variables
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Create a `.env` file in the root:
+
+```
+PUBLIC_BOOKING_URL=your_google_calendar_link
+```
+
+For production, add this variable in your Vercel project settings under **Settings → Environment Variables**.
+
+---
+
+## Install & Run
+
+```bash
+npm install
+npm run dev       # Dev server at http://localhost:4321
+npm run build     # Production build to ./dist
+npm run preview   # Preview production build locally
+```
