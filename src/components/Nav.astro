@@ -11,7 +11,10 @@ const links = [
 ---
 
 <nav class="nav">
-  <a href="/" class="nav-logo">Komodo Labs<span>.</span></a>
+  <a href="/" class="nav-logo">
+    <img src="/logo.jpg" alt="Komodo Labs" class="nav-logo-img" />
+    Komodo Labs<span>.</span>
+  </a>
   <ul class="nav-links">
     {links.map((l) => (
       <li><a href={l.href} class={path === l.href ? "active" : ""}>{l.label}</a></li>
@@ -40,6 +43,16 @@ const links = [
     color: var(--white);
     letter-spacing: 1px;
     text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .nav-logo-img {
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    object-fit: cover;
   }
 
   .nav-logo span { color: var(--neon); }
