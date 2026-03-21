@@ -3,13 +3,14 @@ const path = Astro.url.pathname;
 const home = path === "/";
 
 const links = [
-  { label: "Services", href: home ? "#services" : "/#services" },
+  { label: "Services", href: "/services" },
   { label: "Projects", href: "/projects" },
   { label: "Process",  href: home ? "#process"  : "/#process"  },
   { label: "About Me", href: "/about" },
 ];
 ---
 
+<div class="nav-wrap">
 <nav class="nav">
   <a href="/" class="nav-logo">
     <img src="/logo.jpg" alt="Komodo Labs" class="nav-logo-img" />
@@ -24,9 +25,30 @@ const links = [
     <div class="nav-status"><span class="dot"></span> Available</div>
     <a href={home ? "#contact" : "/#contact"} class="nav-cta-btn">Get in Touch</a>
   </div>
+  <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
 </nav>
 
+<!-- MOBILE MENU -->
+<div class="mobile-menu" aria-hidden="true">
+
+  <ul class="mobile-links">
+    {links.map((l) => (
+      <li><a href={l.href} class={path === l.href ? "active" : ""}>{l.label}</a></li>
+    ))}
+  </ul>
+  <a href={home ? "#contact" : "/#contact"} class="mobile-cta">Get in Touch</a>
+</div>
+</div>
+
 <style>
+  .nav-wrap {
+    position: relative;
+  }
+
   .nav {
     display: flex;
     align-items: center;
@@ -34,6 +56,8 @@ const links = [
     padding: 22px 0;
     border-bottom: 1px solid var(--border);
     animation: fadeDown 0.5s ease both;
+    position: relative;
+    z-index: 100;
   }
 
   .nav-logo {
@@ -113,6 +137,96 @@ const links = [
     color: var(--black);
   }
 
+  /* HAMBURGER */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 36px;
+    height: 36px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    z-index: 101;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 100%;
+    height: 1.5px;
+    background: var(--white);
+    border-radius: 2px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform-origin: center;
+  }
+
+  .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  /* MOBILE MENU */
+  .mobile-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: -32px;
+    right: -32px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 24px 32px 32px;
+    z-index: 99;
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    pointer-events: none;
+  }
+
+  .mobile-menu.open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .mobile-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 24px;
+  }
+
+  .mobile-links a {
+    display: block;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--gray-400);
+    text-decoration: none;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    transition: color 0.2s;
+    letter-spacing: -0.5px;
+  }
+
+  .mobile-links a:hover,
+  .mobile-links a.active { color: var(--white); }
+
+  .mobile-cta {
+    display: inline-flex;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 12px 28px;
+    border-radius: 10px;
+    background: var(--neon);
+    color: var(--black);
+    text-decoration: none;
+    transition: box-shadow 0.25s;
+    margin-top: 8px;
+  }
+
+  .mobile-cta:hover { box-shadow: 0 0 24px var(--neon-glow); }
+
   @keyframes fadeDown {
     from { opacity: 0; transform: translateY(-14px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -126,5 +240,30 @@ const links = [
   @media (max-width: 768px) {
     .nav-links  { display: none; }
     .nav-status { display: none; }
+    .nav-cta-btn { display: none; }
+    .hamburger  { display: flex; }
+    .mobile-menu { display: block; }
   }
 </style>
+
+<script>
+  const hamburger = document.querySelector('.hamburger');
+  const mobileMenu = document.querySelector('.mobile-menu');
+
+  hamburger?.addEventListener('click', () => {
+    const isOpen = hamburger.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded', String(isOpen));
+    mobileMenu?.classList.toggle('open', isOpen);
+    mobileMenu?.setAttribute('aria-hidden', String(!isOpen));
+  });
+
+  // Close menu when a link is clicked
+  mobileMenu?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      hamburger?.classList.remove('open');
+      hamburger?.setAttribute('aria-expanded', 'false');
+      mobileMenu.classList.remove('open');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+    });
+  });
+</script>

@@ -148,8 +148,39 @@ const statusConfig = {
 
   .icon-link:hover { color: var(--white); }
 
-  @media (max-width: 768px) {
-    .project-desc { display: none; }
+  @media (max-width: 900px) {
+    .projects-table,
+    .projects-table tbody,
+    .projects-table tr,
+    .projects-table td { display: block; width: 100%; }
+
+    .projects-table thead { display: none; }
+
+    .projects-table tr {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 12px;
+      background: var(--surface);
+      transition: background 0.2s;
+    }
+
+    .projects-table tr:hover { background: var(--card); }
+
+    .projects-table td {
+      padding: 0;
+      border: none;
+      text-align: left;
+    }
+
+    .projects-table td:nth-child(1) { margin-bottom: 8px; }
+    .projects-table td:nth-child(2) { margin-bottom: 14px; }
+    .projects-table td:nth-child(3) { margin-bottom: 12px; }
+    .projects-table td:nth-child(4) { margin-bottom: 12px; }
+
+    .project-desc { display: block; }
+
+    .links { justify-content: flex-start; }
   }
 </style>
 
