@@ -8,7 +8,7 @@
     "website": null
   },
   {
-    "name": "Telcoin eUSD Stablecoin",
+    "name": "Telcoin Digital Asset BankC eUSD Stablecoin",
     "description": "Built, tested, and deployed eUSD — the official stablecoin of Telcoin Digital Asset Bank, the first registered crypto bank in the US. Designed to compete with USDC, eUSD is a fully on-chain dollar-pegged asset backed by Telcoin's regulated banking infrastructure.",
     "labels": ["Solidity", "Stablecoin", "DeFi", "Fintech", "Foundry"],
     "status": "Live",
