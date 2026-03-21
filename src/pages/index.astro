@@ -1,0 +1,896 @@
+---
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chase — Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #000000;
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --card: #161616;
+    --card-hover: #1c1c1c;
+    --border: #222222;
+    --border-hi: #333333;
+    --white: #ffffff;
+    --gray-100: #f0f0f0;
+    --gray-200: #d4d4d4;
+    --gray-300: #a3a3a3;
+    --gray-400: #737373;
+    --gray-500: #525252;
+    --gray-600: #404040;
+    --gray-700: #2a2a2a;
+    --neon: #CFFF04;
+    --neon-dim: rgba(207, 255, 4, 0.08);
+    --neon-mid: rgba(207, 255, 4, 0.15);
+    --neon-glow: rgba(207, 255, 4, 0.25);
+    --font-display: 'Outfit', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: var(--font-display);
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: var(--neon);
+    color: var(--black);
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  .wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* ═══ NAV ═══ */
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--border);
+    animation: fadeDown 0.5s ease both;
+  }
+
+  .nav-logo {
+    font-family: var(--font-mono);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--white);
+    letter-spacing: 1px;
+  }
+
+  .nav-logo span { color: var(--neon); }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--gray-400);
+    transition: color 0.25s;
+  }
+
+  .nav-links a:hover { color: var(--white); }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .nav-status {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--gray-500);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-status .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--neon);
+    box-shadow: 0 0 8px var(--neon-glow);
+    animation: pulse 2.5s ease infinite;
+  }
+
+  .nav-cta-btn {
+    font-size: 13px;
+    font-weight: 500;
+    padding: 9px 20px;
+    border-radius: 8px;
+    background: var(--white);
+    color: var(--black);
+    transition: all 0.25s;
+  }
+
+  .nav-cta-btn:hover {
+    background: var(--neon);
+    color: var(--black);
+  }
+
+  /* ═══ HERO ═══ */
+  .hero {
+    padding: 120px 0 100px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 64px;
+  }
+
+  .hero-content {
+    text-align: left;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--neon);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 36px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.15s both;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--neon);
+    animation: pulse 2.5s ease infinite;
+  }
+
+  .hero h1 {
+    font-size: clamp(44px, 6vw, 72px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.25s both;
+  }
+
+  .hero h1 .thin {
+    font-weight: 300;
+    color: var(--gray-400);
+  }
+
+  .hero h1 .neon {
+    color: var(--neon);
+  }
+
+  .hero-desc {
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--gray-300);
+    line-height: 1.7;
+    max-width: 560px;
+    margin: 0 0 44px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.4s both;
+  }
+
+  .hero-actions {
+    display: flex;
+    justify-content: flex-start;
+    gap: 14px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.55s both;
+  }
+
+  .btn {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 500;
+    padding: 14px 32px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+
+  .btn-primary {
+    background: var(--neon);
+    color: var(--black);
+    font-weight: 600;
+  }
+
+  .btn-primary:hover {
+    box-shadow: 0 0 32px var(--neon-glow);
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    background: var(--card);
+    color: var(--gray-200);
+    border: 1px solid var(--border);
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--border-hi);
+    background: var(--card-hover);
+    color: var(--white);
+  }
+
+  /* ═══ TERMINAL ═══ */
+  .terminal-wrap {
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.6s both;
+  }
+
+  .terminal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  .terminal-bar {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 13px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .terminal-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .terminal-dot.r { background: #ff5f57; }
+  .terminal-dot.y { background: #ffbd2e; }
+  .terminal-dot.g { background: #28c840; }
+
+  .terminal-title {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--gray-600);
+    margin-left: 8px;
+  }
+
+  .terminal-body {
+    padding: 18px 20px;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    line-height: 2;
+  }
+
+  .tl { color: var(--gray-400); }
+  .tl .p { color: var(--gray-500); }
+  .tl .cmd { color: var(--white); }
+  .tl .flag { color: var(--gray-300); }
+  .tl .key { color: var(--neon); }
+  .tl .val { color: var(--gray-300); }
+  .tl .status { color: var(--neon); }
+
+  .cursor {
+    display: inline-block;
+    width: 8px; height: 15px;
+    background: var(--neon);
+    vertical-align: text-bottom;
+    animation: blink 1s step-end infinite;
+  }
+
+  /* ═══ DIVIDER ═══ */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0;
+  }
+
+  /* ═══ SECTION COMMON ═══ */
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--gray-500);
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .section-heading {
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    margin-bottom: 52px;
+  }
+
+  /* ═══ SERVICES ═══ */
+  .services { padding: 100px 0; }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .service-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 36px 30px;
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    position: relative;
+    opacity: 0;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .service-card:nth-child(1) { animation-delay: 0.05s; }
+  .service-card:nth-child(2) { animation-delay: 0.12s; }
+  .service-card:nth-child(3) { animation-delay: 0.19s; }
+
+  .service-card:hover {
+    border-color: var(--border-hi);
+    background: var(--card);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+  }
+
+  .service-icon {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    background: var(--neon-dim);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    transition: background 0.3s;
+  }
+
+  .service-card:hover .service-icon { background: var(--neon-mid); }
+
+  .service-card h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--white);
+  }
+
+  .service-card p {
+    font-size: 14px;
+    color: var(--gray-400);
+    line-height: 1.7;
+    margin-bottom: 24px;
+    font-weight: 300;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    background: var(--bg);
+    color: var(--gray-500);
+    border: 1px solid var(--border);
+    letter-spacing: 0.5px;
+    transition: all 0.3s;
+  }
+
+  .service-card:hover .tag { color: var(--gray-400); border-color: var(--border-hi); }
+
+  /* ═══ PROJECTS ═══ */
+  .projects { padding: 100px 0; }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 32px;
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity: 0;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .project-card:nth-child(1) { animation-delay: 0.05s; }
+  .project-card:nth-child(2) { animation-delay: 0.1s; }
+  .project-card:nth-child(3) { animation-delay: 0.15s; }
+  .project-card:nth-child(4) { animation-delay: 0.2s; }
+
+  .project-card:hover {
+    border-color: var(--border-hi);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+  }
+
+  .project-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+  }
+
+  .project-type {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--gray-500);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .badge {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .badge-live {
+    color: var(--neon);
+    background: var(--neon-dim);
+    border: 1px solid rgba(207,255,4,0.15);
+  }
+
+  .badge-done {
+    color: var(--gray-300);
+    background: rgba(163,163,163,0.08);
+    border: 1px solid rgba(163,163,163,0.12);
+  }
+
+  .project-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--white);
+  }
+
+  .project-card p {
+    font-size: 13.5px;
+    color: var(--gray-400);
+    line-height: 1.7;
+    margin-bottom: 20px;
+    font-weight: 300;
+  }
+
+  .tech-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+
+  .tech-tags span {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: var(--bg);
+    color: var(--gray-500);
+    border: 1px solid var(--border);
+  }
+
+  /* ═══ PROCESS ═══ */
+  .process { padding: 100px 0; }
+
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+  }
+
+  .process-step {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 36px 28px;
+    transition: all 0.3s;
+    opacity: 0;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .process-step:first-child { border-radius: 14px 0 0 14px; }
+  .process-step:last-child { border-radius: 0 14px 14px 0; }
+
+  .process-step:nth-child(1) { animation-delay: 0.05s; }
+  .process-step:nth-child(2) { animation-delay: 0.1s; }
+  .process-step:nth-child(3) { animation-delay: 0.15s; }
+  .process-step:nth-child(4) { animation-delay: 0.2s; }
+
+  .process-step:hover { background: var(--card); }
+
+  .step-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--neon);
+    margin-bottom: 16px;
+    letter-spacing: 2px;
+  }
+
+  .process-step h4 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--white);
+  }
+
+  .process-step p {
+    font-size: 13px;
+    color: var(--gray-400);
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  /* ═══ CTA ═══ */
+  .cta { padding: 100px 0; text-align: center; }
+
+  .cta-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 76px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-box::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(207,255,4,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-box h2 {
+    font-size: 40px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    letter-spacing: -1px;
+    position: relative;
+  }
+
+  .cta-box h2 .neon { color: var(--neon); }
+
+  .cta-box p {
+    font-size: 16px;
+    color: var(--gray-400);
+    max-width: 460px;
+    margin: 0 auto 40px;
+    line-height: 1.7;
+    font-weight: 300;
+    position: relative;
+  }
+
+  .cta-actions {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    position: relative;
+  }
+
+  /* ═══ FOOTER ═══ */
+  .footer {
+    padding: 36px 0;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-copy {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--gray-600);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 13px;
+    color: var(--gray-500);
+    transition: color 0.25s;
+  }
+
+  .footer-links a:hover { color: var(--white); }
+
+  /* ═══ ANIMATIONS ═══ */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+  }
+
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+
+  /* ═══ RESPONSIVE ═══ */
+  @media (max-width: 1024px) {
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    .process-grid { grid-template-columns: 1fr 1fr; }
+    .process-step:first-child { border-radius: 14px 0 0 0; }
+    .process-step:nth-child(2) { border-radius: 0 14px 0 0; }
+    .process-step:nth-child(3) { border-radius: 0 0 0 14px; }
+    .process-step:last-child { border-radius: 0 0 14px 0; }
+  }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .nav-status { display: none; }
+    .hero { padding: 80px 0 60px; grid-template-columns: 1fr; gap: 40px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .process-grid { grid-template-columns: 1fr; }
+    .process-step,
+    .process-step:first-child, .process-step:last-child,
+    .process-step:nth-child(2), .process-step:nth-child(3) { border-radius: 14px; }
+    .cta-box { padding: 52px 24px; }
+    .hero-actions { flex-direction: column; align-items: flex-start; }
+    .cta-actions { flex-direction: column; align-items: center; }
+    .footer { flex-direction: column; gap: 16px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-logo">Komodo Labs<span>.</span></div>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="nav-status"><span class="dot"></span> Available</div>
+      <a href="#contact" class="nav-cta-btn">Get in Touch</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">Open for projects</div>
+      <h1>Hello, I'm Chase.<br><span class="thin">I build</span> <span class="neon">intelligent</span><br><span class="thin">systems.</span></h1>
+      <p class="hero-desc">
+        AI integration, blockchain architecture, and custom automations — I help companies ship smarter, faster, and at scale.
+      </p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn btn-primary">Start a Project</a>
+        <a href="#work" class="btn btn-secondary">View Work</a>
+      </div>
+    </div>
+
+    <div class="terminal-wrap">
+      <div class="terminal">
+        <div class="terminal-bar">
+          <span class="terminal-dot r"></span>
+          <span class="terminal-dot y"></span>
+          <span class="terminal-dot g"></span>
+          <span class="terminal-title">chase ~ /projects</span>
+        </div>
+        <div class="terminal-body">
+          <div class="tl"><span class="p">$</span> <span class="cmd">chase</span> <span class="flag">--status</span></div>
+          <div class="tl">&nbsp;</div>
+          <div class="tl"><span class="key">role</span>     <span class="val">Full-Stack Engineer</span></div>
+          <div class="tl"><span class="key">focus</span>    <span class="val">AI · Blockchain · Automation</span></div>
+          <div class="tl"><span class="key">exp</span>      <span class="val">8+ years</span></div>
+          <div class="tl"><span class="key">location</span> <span class="val">Remote / Worldwide</span></div>
+          <div class="tl"><span class="key">status</span>   <span class="status">&#9679; open to work</span></div>
+          <div class="tl">&nbsp;</div>
+          <div class="tl"><span class="p">$</span> <span class="cursor"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- SERVICES -->
+  <section class="services" id="services">
+    <div class="section-label">Services</div>
+    <h2 class="section-heading">What I do</h2>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="22" height="22" fill="none" stroke="var(--neon)" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 3-1.5 5-4 6.5V18H9v-2.5C6.5 14 5 12 5 9a7 7 0 0 1 7-7z"/><path d="M9 22h6M10 18v4M14 18v4"/></svg>
+        </div>
+        <h3>AI Integration</h3>
+        <p>Custom AI solutions — from LLM-powered workflows and intelligent agents to computer vision pipelines and predictive analytics. I integrate AI where it creates measurable impact.</p>
+        <div class="tags">
+          <span class="tag">LLMs</span>
+          <span class="tag">Agents</span>
+          <span class="tag">RAG</span>
+          <span class="tag">ML Pipelines</span>
+          <span class="tag">NLP</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="22" height="22" fill="none" stroke="var(--neon)" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><path d="M10 6.5h4M6.5 10v4M17.5 10v4M10 17.5h4"/></svg>
+        </div>
+        <h3>Blockchain Integration</h3>
+        <p>End-to-end Web3 engineering — smart contracts, DeFi protocols, token systems, and dApp development. Decentralized infrastructure that's secure and scalable.</p>
+        <div class="tags">
+          <span class="tag">Solidity</span>
+          <span class="tag">Smart Contracts</span>
+          <span class="tag">DeFi</span>
+          <span class="tag">Web3</span>
+          <span class="tag">dApps</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="22" height="22" fill="none" stroke="var(--neon)" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <h3>Automations</h3>
+        <p>Eliminate manual bottlenecks with custom automation — CI/CD pipelines, data workflows, API integrations, and intelligent task orchestration.</p>
+        <div class="tags">
+          <span class="tag">CI/CD</span>
+          <span class="tag">API Integration</span>
+          <span class="tag">Workflows</span>
+          <span class="tag">ETL</span>
+          <span class="tag">Orchestration</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PROJECTS -->
+  <section class="projects" id="work">
+    <div class="section-label">Work</div>
+    <h2 class="section-heading">Case Studies</h2>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-top">
+          <span class="project-type">AI</span>
+          <span class="badge badge-live">Live</span>
+        </div>
+        <h3>AI-Powered Analytics Platform</h3>
+        <p>Built an intelligent analytics engine that processes 2M+ daily events, using LLMs to surface insights and anomalies in real-time for a Series B fintech startup.</p>
+        <div class="tech-tags">
+          <span>Python</span><span>GPT-4</span><span>Kafka</span><span>React</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-top">
+          <span class="project-type">Blockchain</span>
+          <span class="badge badge-done">Complete</span>
+        </div>
+        <h3>DeFi Yield Aggregator</h3>
+        <p>Engineered a multi-chain yield aggregator with custom smart contracts, handling $12M+ TVL across Ethereum and Arbitrum with automated rebalancing.</p>
+        <div class="tech-tags">
+          <span>Solidity</span><span>Hardhat</span><span>The Graph</span><span>Next.js</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-top">
+          <span class="project-type">Automation</span>
+          <span class="badge badge-live">Live</span>
+        </div>
+        <h3>Enterprise Workflow Engine</h3>
+        <p>Designed a no-code automation platform that replaced 40+ manual processes for a logistics company, reducing operational overhead by 60%.</p>
+        <div class="tech-tags">
+          <span>Node.js</span><span>Temporal</span><span>PostgreSQL</span><span>Docker</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-top">
+          <span class="project-type">AI + Blockchain</span>
+          <span class="badge badge-done">Complete</span>
+        </div>
+        <h3>Predictive NFT Marketplace</h3>
+        <p>Created an NFT marketplace with ML-driven pricing models and automated royalty distribution through smart contracts.</p>
+        <div class="tech-tags">
+          <span>TensorFlow</span><span>Solidity</span><span>IPFS</span><span>Vue.js</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PROCESS -->
+  <section class="process" id="process">
+    <div class="section-label">Process</div>
+    <h2 class="section-heading">How I work</h2>
+    <div class="process-grid">
+      <div class="process-step">
+        <div class="step-num">01 &mdash;</div>
+        <h4>Discovery</h4>
+        <p>Deep-dive into your business goals, technical requirements, and existing infrastructure to map the optimal path forward.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">02 &mdash;</div>
+        <h4>Architecture</h4>
+        <p>Design system architecture with clear milestones, tech stack decisions, and a roadmap that accounts for scale.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">03 &mdash;</div>
+        <h4>Build</h4>
+        <p>Iterative development with weekly demos, transparent communication, and production-grade code from day one.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">04 &mdash;</div>
+        <h4>Launch &amp; Scale</h4>
+        <p>Deploy with confidence — monitoring, documentation, and ongoing support to ensure your system thrives.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CTA -->
+  <section class="cta" id="contact">
+    <div class="cta-box">
+      <div class="section-label">Let's build something</div>
+      <h2>Ready to <span class="neon">ship</span>?</h2>
+      <p>Whether you need an AI prototype, a smart contract audit, or end-to-end automation — let's talk.</p>
+      <div class="cta-actions">
+        <a href="mailto:chase@example.com" class="btn btn-primary">Get in Touch</a>
+        <a href="#" class="btn btn-secondary">Book a Call</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-copy">&copy; 2026 Chase. All rights reserved.</div>
+    <ul class="footer-links">
+      <li><a href="#">GitHub</a></li>
+      <li><a href="#">LinkedIn</a></li>
+      <li><a href="#">X</a></li>
+    </ul>
+  </footer>
+
+</div>
+
+</body>
+</html>
