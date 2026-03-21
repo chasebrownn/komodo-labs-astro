@@ -1,0 +1,30 @@
+[
+  {
+    "name": "AI Analytics Platform",
+    "description": "Intelligent analytics engine processing 2M+ daily events, surfacing insights and anomalies in real-time using LLMs.",
+    "labels": ["AI", "LLMs", "Python", "Kafka"],
+    "status": "live",
+    "repo": "https://github.com/chasebrown/ai-analytics-platform"
+  },
+  {
+    "name": "DeFi Yield Aggregator",
+    "description": "Multi-chain yield aggregator with custom smart contracts across Ethereum and Arbitrum with automated rebalancing.",
+    "labels": ["Blockchain", "Solidity", "DeFi"],
+    "status": "complete",
+    "repo": "https://github.com/chasebrown/defi-yield-aggregator"
+  },
+  {
+    "name": "Enterprise Workflow Engine",
+    "description": "No-code automation platform that replaced 40+ manual processes for a logistics company, cutting overhead by 60%.",
+    "labels": ["Automation", "Node.js", "Temporal"],
+    "status": "in-progress",
+    "repo": null
+  },
+  {
+    "name": "Predictive NFT Marketplace",
+    "description": "NFT marketplace with ML-driven pricing models and automated royalty distribution via smart contracts.",
+    "labels": ["AI", "Blockchain", "TensorFlow", "IPFS"],
+    "status": "complete",
+    "repo": "https://github.com/chasebrown/nft-marketplace"
+  }
+]

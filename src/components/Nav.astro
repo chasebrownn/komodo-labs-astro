@@ -1,0 +1,117 @@
+---
+const path = Astro.url.pathname;
+const home = path === "/";
+
+const links = [
+  { label: "Services", href: home ? "#services" : "/#services" },
+  { label: "Projects", href: "/projects" },
+  { label: "Process",  href: home ? "#process"  : "/#process"  },
+  { label: "About Me", href: "/about" },
+];
+---
+
+<nav class="nav">
+  <a href="/" class="nav-logo">Komodo Labs<span>.</span></a>
+  <ul class="nav-links">
+    {links.map((l) => (
+      <li><a href={l.href} class={path === l.href ? "active" : ""}>{l.label}</a></li>
+    ))}
+  </ul>
+  <div class="nav-right">
+    <div class="nav-status"><span class="dot"></span> Available</div>
+    <a href={home ? "#contact" : "/#contact"} class="nav-cta-btn">Get in Touch</a>
+  </div>
+</nav>
+
+<style>
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--border);
+    animation: fadeDown 0.5s ease both;
+  }
+
+  .nav-logo {
+    font-family: var(--font-mono);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--white);
+    letter-spacing: 1px;
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--neon); }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--gray-400);
+    transition: color 0.25s;
+    text-decoration: none;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active { color: var(--white); }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .nav-status {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--gray-500);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-status .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--neon);
+    box-shadow: 0 0 8px rgba(207, 255, 4, 0.25);
+    animation: pulse 2.5s ease infinite;
+  }
+
+  .nav-cta-btn {
+    font-size: 13px;
+    font-weight: 500;
+    padding: 9px 20px;
+    border-radius: 8px;
+    background: var(--white);
+    color: var(--black);
+    transition: all 0.25s;
+    text-decoration: none;
+  }
+
+  .nav-cta-btn:hover {
+    background: var(--neon);
+    color: var(--black);
+  }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.35; }
+  }
+
+  @media (max-width: 768px) {
+    .nav-links  { display: none; }
+    .nav-status { display: none; }
+  }
+</style>

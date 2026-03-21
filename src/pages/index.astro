@@ -1,4 +1,6 @@
 ---
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
 ---
 
 <!DOCTYPE html>
@@ -678,19 +680,7 @@
 <div class="wrapper">
 
   <!-- NAV -->
-  <nav class="nav">
-    <div class="nav-logo">Komodo Labs<span>.</span></div>
-    <ul class="nav-links">
-      <li><a href="#services">Services</a></li>
-      <li><a href="#work">Work</a></li>
-      <li><a href="#process">Process</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <div class="nav-right">
-      <div class="nav-status"><span class="dot"></span> Available</div>
-      <a href="#contact" class="nav-cta-btn">Get in Touch</a>
-    </div>
-  </nav>
+  <Nav />
 
   <!-- HERO -->
   <section class="hero">
@@ -702,7 +692,7 @@
       </p>
       <div class="hero-actions">
         <a href="#contact" class="btn btn-primary">Start a Project</a>
-        <a href="#work" class="btn btn-secondary">View Work</a>
+        <a href="/projects" class="btn btn-secondary">View Work</a>
       </div>
     </div>
 
@@ -783,60 +773,6 @@
 
   <div class="divider"></div>
 
-  <!-- PROJECTS -->
-  <section class="projects" id="work">
-    <div class="section-label">Work</div>
-    <h2 class="section-heading">Case Studies</h2>
-    <div class="projects-grid">
-      <div class="project-card">
-        <div class="project-top">
-          <span class="project-type">AI</span>
-          <span class="badge badge-live">Live</span>
-        </div>
-        <h3>AI-Powered Analytics Platform</h3>
-        <p>Built an intelligent analytics engine that processes 2M+ daily events, using LLMs to surface insights and anomalies in real-time for a Series B fintech startup.</p>
-        <div class="tech-tags">
-          <span>Python</span><span>GPT-4</span><span>Kafka</span><span>React</span>
-        </div>
-      </div>
-      <div class="project-card">
-        <div class="project-top">
-          <span class="project-type">Blockchain</span>
-          <span class="badge badge-done">Complete</span>
-        </div>
-        <h3>DeFi Yield Aggregator</h3>
-        <p>Engineered a multi-chain yield aggregator with custom smart contracts, handling $12M+ TVL across Ethereum and Arbitrum with automated rebalancing.</p>
-        <div class="tech-tags">
-          <span>Solidity</span><span>Hardhat</span><span>The Graph</span><span>Next.js</span>
-        </div>
-      </div>
-      <div class="project-card">
-        <div class="project-top">
-          <span class="project-type">Automation</span>
-          <span class="badge badge-live">Live</span>
-        </div>
-        <h3>Enterprise Workflow Engine</h3>
-        <p>Designed a no-code automation platform that replaced 40+ manual processes for a logistics company, reducing operational overhead by 60%.</p>
-        <div class="tech-tags">
-          <span>Node.js</span><span>Temporal</span><span>PostgreSQL</span><span>Docker</span>
-        </div>
-      </div>
-      <div class="project-card">
-        <div class="project-top">
-          <span class="project-type">AI + Blockchain</span>
-          <span class="badge badge-done">Complete</span>
-        </div>
-        <h3>Predictive NFT Marketplace</h3>
-        <p>Created an NFT marketplace with ML-driven pricing models and automated royalty distribution through smart contracts.</p>
-        <div class="tech-tags">
-          <span>TensorFlow</span><span>Solidity</span><span>IPFS</span><span>Vue.js</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
   <!-- PROCESS -->
   <section class="process" id="process">
     <div class="section-label">Process</div>
@@ -881,14 +817,7 @@
   </section>
 
   <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-copy">&copy; 2026 Chase. All rights reserved.</div>
-    <ul class="footer-links">
-      <li><a href="#">GitHub</a></li>
-      <li><a href="#">LinkedIn</a></li>
-      <li><a href="#">X</a></li>
-    </ul>
-  </footer>
+  <Footer />
 
 </div>
 
