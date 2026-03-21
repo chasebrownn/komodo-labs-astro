@@ -1,0 +1,402 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+const services = [
+  {
+    id: "ai",
+    label: "AI",
+    title: "AI Integration & Agents",
+    description: "I help businesses move beyond AI experimentation and into real implementation. From autonomous agents and LLM-powered workflows to intelligent automation layered on top of existing products — I build AI systems that drive measurable outcomes.",
+    deliverables: ["Custom LLM workflows & pipelines", "Autonomous AI agents (Eliza, custom)", "RAG systems & knowledge bases", "AI-powered internal tooling", "Workflow automation & orchestration"],
+    tags: ["LLMs", "Agents", "RAG", "Eliza", "Python", "Automation"],
+  },
+  {
+    id: "contracts",
+    label: "Smart Contracts",
+    title: "Smart Contract Engineering",
+    description: "Production-grade Solidity and Rust development with a security-first mindset. I've designed and deployed complex on-chain systems across Ethereum, Arbitrum, Solana, and more — from protocol architecture all the way through to mainnet deployment.",
+    deliverables: ["Protocol architecture & design", "Smart contract development & testing", "Security review & audit prep", "Mainnet deployment & verification", "Foundry & Hardhat test suites"],
+    tags: ["Solidity", "Rust", "Foundry", "Hardhat", "Ethereum", "Solana"],
+  },
+  {
+    id: "defi",
+    label: "DeFi",
+    title: "DeFi Protocol Design",
+    description: "End-to-end DeFi engineering — stablecoins, yield vaults, liquidity systems, and peg mechanics. I've built protocols responsible for tens of millions in TVL, with deep experience in economic design, security, and long-term maintainability.",
+    deliverables: ["Stablecoin architecture & deployment", "Yield vaults & delta-neutral strategies", "Peg stability mechanisms", "Liquidity & AMM integrations", "veToken governance systems"],
+    tags: ["Stablecoins", "Yield", "DeFi", "AMM", "Governance", "Arbitrage"],
+  },
+  {
+    id: "crosschain",
+    label: "Cross-Chain",
+    title: "Cross-Chain Infrastructure",
+    description: "Multi-chain systems built on battle-tested bridging protocols. Whether you're migrating an existing token, building cross-chain liquidity, or architecting a protocol that spans multiple networks — I've done it at scale using LayerZero v2 and beyond.",
+    deliverables: ["Cross-chain token architecture", "LayerZero v2 integration", "Bridge design & deployment", "Multi-chain testing & verification", "Token migration planning"],
+    tags: ["LayerZero", "Cross-Chain", "Solidity", "Arbitrum", "Ethereum", "Solana"],
+  },
+  {
+    id: "rwa",
+    label: "RWA",
+    title: "RWA & Tokenization",
+    description: "Bringing real-world assets on-chain — from tokenized real estate and governance tokens to compliant asset frameworks. I've worked at the frontier of RWA with financial institutions and protocol teams building the next generation of on-chain finance.",
+    deliverables: ["RWA token architecture", "Tokenized asset frameworks", "Governance & veToken systems", "Compliance-aware contract design", "On-chain asset management"],
+    tags: ["RWA", "Tokenization", "Governance", "Solidity", "Curve", "DeFi"],
+  },
+  {
+    id: "automation",
+    label: "Automation",
+    title: "Automation & Workflow Engineering",
+    description: "Replace manual bottlenecks with systems that run themselves. I design and build custom automation pipelines, CI/CD infrastructure, API integrations, and data workflows — so your team spends time on what actually matters.",
+    deliverables: ["CI/CD pipeline design & setup", "API & webhook integrations", "Data pipelines & ETL workflows", "Internal tooling & dashboards", "Process automation & scheduling"],
+    tags: ["CI/CD", "Node.js", "Python", "APIs", "ETL", "Orchestration"],
+  },
+  {
+    id: "audit",
+    label: "Code Audit",
+    title: "AI-Assisted Code Review & Hardening",
+    description: "Built something fast with AI or vibe-coded your way to a working prototype? I'll take it from there. I review AI-generated and rapidly-built codebases, identify security vulnerabilities, enforce best practices, and bring the code up to production standards before it goes live.",
+    deliverables: ["Full codebase security review", "Vulnerability identification & fixes", "Best practices & code quality enforcement", "Test coverage assessment & improvement", "Refactor recommendations & implementation"],
+    tags: ["Security", "Solidity", "TypeScript", "Code Review", "Testing", "Refactoring"],
+  },
+  {
+    id: "consulting",
+    label: "Consulting",
+    title: "Technical Consulting",
+    description: "Not every problem needs code written — sometimes you need clarity first. I offer technical consulting for founders, teams, and investors who need an experienced engineer to pressure-test architecture, evaluate technology decisions, or help navigate the Web3 and AI landscape.",
+    deliverables: ["Architecture & technical strategy", "Tech stack evaluation & recommendations", "Smart contract & protocol review", "Due diligence for technical teams", "Ongoing advisory & fractional CTO"],
+    tags: ["Strategy", "Architecture", "Web3", "AI", "Advisory", "Due Diligence"],
+  },
+];
+
+const icons = {
+  ai: `<svg width="22" height="22" fill="none" stroke="var(--neon)" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 3-1.5 5-4 6.5V18H9v-2.5C6.5 14 5 12 5 9a7 7 0 0 1 7-7z"/><path d="M9 22h6M10 18v4M14 18v4"/></svg>`,
+  contracts: `<svg width="22" height="22" fill="none" stroke="var(--neon)" stroke-width="1.8" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>`,
+  defi: `<svg width="22" height="22" fill="none" stroke="var(--neon)" stroke-width="1.8" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
+  crosschain: `<svg width="22" height="22" fill="none" stroke="var(--neon)" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><path d="M10 6.5h4M6.5 10v4M17.5 10v4M10 17.5h4"/></svg>`,
+  rwa: `<svg width="22" height="22" fill="none" stroke="var(--neon)" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
+  automation: `<svg width="22" height="22" fill="none" stroke="var(--neon)" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/><circle cx="12" cy="12" r="3"/></svg>`,
+  audit: `<svg width="22" height="22" fill="none" stroke="var(--neon)" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>`,
+  consulting: `<svg width="22" height="22" fill="none" stroke="var(--neon)" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`,
+};
+---
+
+<Layout
+  title="Services — Komodo Labs"
+  description="Smart contract engineering, AI integration, DeFi protocol design, cross-chain infrastructure, RWA tokenization, and automation — built for production."
+>
+<style>
+  /* PAGE HEADER */
+  .page-header {
+    padding: 80px 0 72px;
+    max-width: 680px;
+    opacity: 0;
+    animation: fadeUp 0.5s ease 0.1s both;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--gray-500);
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .page-header h1 {
+    font-size: 48px;
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 1.05;
+    margin-bottom: 20px;
+  }
+
+  .page-header h1 span { color: var(--neon); }
+
+  .page-header p {
+    font-size: 17px;
+    color: var(--gray-300);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* SERVICES GRID */
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-bottom: 120px;
+  }
+
+  .service-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 44px 40px;
+    transition: background 0.3s;
+    opacity: 0;
+    animation: fadeUp 0.5s ease both;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .service-card:nth-child(1) { animation-delay: 0.05s; border-radius: 14px 0 0 0; }
+  .service-card:nth-child(2) { animation-delay: 0.1s;  border-radius: 0 14px 0 0; }
+  .service-card:nth-child(3) { animation-delay: 0.15s; }
+  .service-card:nth-child(4) { animation-delay: 0.2s; }
+  .service-card:nth-child(5) { animation-delay: 0.25s; }
+  .service-card:nth-child(6) { animation-delay: 0.3s; }
+  .service-card:nth-child(7) { animation-delay: 0.35s; border-radius: 0 0 0 14px; }
+  .service-card:nth-child(8) { animation-delay: 0.4s;  border-radius: 0 0 14px 0; }
+
+  .service-card:hover { background: var(--card); }
+
+  .service-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+
+  .service-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    background: var(--neon-dim);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s;
+    flex-shrink: 0;
+  }
+
+  .service-card:hover .service-icon { background: var(--neon-mid); }
+
+  .service-pill {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--neon);
+    background: var(--neon-dim);
+    border: 1px solid rgba(207,255,4,0.15);
+    padding: 4px 10px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .service-card h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    letter-spacing: -0.5px;
+  }
+
+  .service-card > p {
+    font-size: 14px;
+    color: var(--gray-400);
+    line-height: 1.75;
+    font-weight: 300;
+    margin-bottom: 28px;
+    flex: 1;
+  }
+
+  .deliverables {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 28px;
+  }
+
+  .deliverables li {
+    font-size: 13px;
+    color: var(--gray-300);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 300;
+  }
+
+  .deliverables li::before {
+    content: '';
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--neon);
+    flex-shrink: 0;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 24px;
+  }
+
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    padding: 4px 9px;
+    border-radius: 5px;
+    background: var(--bg);
+    color: var(--gray-500);
+    border: 1px solid var(--border);
+  }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0;
+  }
+
+  /* CTA */
+  .cta {
+    padding: 100px 0;
+    text-align: center;
+  }
+
+  .cta-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 80px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-box::before {
+    content: '';
+    position: absolute;
+    top: -120px; left: 50%;
+    transform: translateX(-50%);
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(207,255,4,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-box h2 {
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .cta-box h2 span { color: var(--neon); }
+
+  .cta-box p {
+    font-size: 16px;
+    color: var(--gray-400);
+    max-width: 480px;
+    margin: 0 auto 40px;
+    line-height: 1.7;
+    font-weight: 300;
+    position: relative;
+  }
+
+  .cta-actions {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    position: relative;
+  }
+
+  .btn {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 500;
+    padding: 14px 32px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+
+  .btn-primary {
+    background: var(--neon);
+    color: var(--black);
+    font-weight: 600;
+  }
+
+  .btn-primary:hover {
+    box-shadow: 0 0 32px var(--neon-glow);
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    background: var(--card);
+    color: var(--gray-200);
+    border: 1px solid var(--border);
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--border-hi);
+    background: var(--card-hover);
+    color: var(--white);
+  }
+
+  @media (max-width: 768px) {
+    .page-header { padding: 60px 0 52px; }
+    .page-header h1 { font-size: 36px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .service-card,
+    .service-card:nth-child(n) { border-radius: 14px; }
+    .cta-box { padding: 52px 24px; }
+    .cta-actions { flex-direction: column; align-items: center; }
+  }
+</style>
+
+<div class="wrapper">
+
+  <Nav />
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="section-label">Services</div>
+    <h1>What I <span>build</span>.</h1>
+    <p>I work with founders, protocol teams, and businesses to design and ship production-grade software across Web3 and AI.</p>
+  </div>
+
+  <!-- SERVICES -->
+  <div class="services-grid">
+    {services.map((s) => (
+      <div class="service-card">
+        <div class="service-card-top">
+          <div class="service-icon" set:html={icons[s.id]} />
+          <span class="service-pill">{s.label}</span>
+        </div>
+        <h2>{s.title}</h2>
+        <p>{s.description}</p>
+        <ul class="deliverables">
+          {s.deliverables.map((d) => <li>{d}</li>)}
+        </ul>
+        <div class="tags">
+          {s.tags.map((t) => <span class="tag">{t}</span>)}
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="cta-box">
+      <div class="section-label">Let's build something</div>
+      <h2>Ready to <span>ship</span>?</h2>
+      <p>Have a protocol to launch, a system to automate, or an AI idea to bring to life? Let's talk about what you're building.</p>
+      <div class="cta-actions">
+        <a href="mailto:chase@komodolabs.io" class="btn btn-primary">Get in Touch</a>
+        <a href={import.meta.env.PUBLIC_BOOKING_URL} target="_blank" rel="noopener" class="btn btn-secondary">Book a Call</a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+
+</div>
+
+</Layout>
