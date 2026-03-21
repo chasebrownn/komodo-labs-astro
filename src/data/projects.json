@@ -1,30 +1,82 @@
 [
   {
-    "name": "AI Analytics Platform",
-    "description": "Intelligent analytics engine processing 2M+ daily events, surfacing insights and anomalies in real-time using LLMs.",
-    "labels": ["AI", "LLMs", "Python", "Kafka"],
-    "status": "live",
-    "repo": "https://github.com/chasebrown/ai-analytics-platform"
-  },
-  {
-    "name": "DeFi Yield Aggregator",
-    "description": "Multi-chain yield aggregator with custom smart contracts across Ethereum and Arbitrum with automated rebalancing.",
-    "labels": ["Blockchain", "Solidity", "DeFi"],
-    "status": "complete",
-    "repo": "https://github.com/chasebrown/defi-yield-aggregator"
-  },
-  {
-    "name": "Enterprise Workflow Engine",
-    "description": "No-code automation platform that replaced 40+ manual processes for a logistics company, cutting overhead by 60%.",
-    "labels": ["Automation", "Node.js", "Temporal"],
+    "name": "Telcoin TEL v3 Cross-Chain Token",
+    "description": "Designing and deploying the next generation of TEL — Telcoin's governance token with a 300M+ market cap. The v3 upgrade migrates the token to a fully cross-chain architecture powered by LayerZero v2, enabling seamless interoperability across chains.",
+    "labels": ["Solidity", "LayerZero", "Foundry", "Governance"],
     "status": "in-progress",
-    "repo": null
+    "repo": "https://github.com/Telcoin-Association/tel-v3",
+    "website": null
   },
   {
-    "name": "Predictive NFT Marketplace",
-    "description": "NFT marketplace with ML-driven pricing models and automated royalty distribution via smart contracts.",
-    "labels": ["AI", "Blockchain", "TensorFlow", "IPFS"],
+    "name": "Telcoin eUSD Stablecoin",
+    "description": "Built, tested, and deployed eUSD — the official stablecoin of Telcoin Digital Asset Bank, the first registered crypto bank in the US. Designed to compete with USDC, eUSD is a fully on-chain dollar-pegged asset backed by Telcoin's regulated banking infrastructure.",
+    "labels": ["Solidity", "Stablecoin", "DeFi", "Fintech", "Foundry"],
+    "status": "Live",
+    "repo": "https://github.com/telcoin/tdab-stablecoin",
+    "website": "https://bank.telco.in/eUSD"
+  },
+  {
+    "name": "Peg Stability Vault (EVM)",
+    "description": "Solidity smart contract enabling 1:1 exchanges between a stablecoin and its backing asset. Deployed for eUSD <> USDC to provide on-chain arbitrage and help maintain the peg across liquidity pools.",
+    "labels": ["Solidity", "Stablecoin", "DeFi", "Arbitrage", "Foundry"],
+    "status": "Live",
+    "repo": "https://github.com/telcoin/tdab-stablecoin/tree/main/src/psv",
+    "website": null
+  },
+  {
+    "name": "Peg Stability Vault (Solana)",
+    "description": "Solana implementation of the peg stability vault — offering the same 1:1 stable swap mechanics for maintaining stablecoin peg integrity, built natively for the Solana runtime.",
+    "labels": ["Rust", "Solana", "Stablecoin", "DeFi", "Anchor"],
+    "status": "in-progress",
+    "repo": "https://github.com/telcoin/solana-psv",
+    "website": null
+  },
+  {
+    "name": "Mainstreet (msUSD)",
+    "description": "An EthenaFi competitor built on Ethereum. msUSD is a yield-bearing stablecoin that generates returns for holders through on-chain delta-neutral strategies and protocol-owned liquidity.",
+    "labels": ["Solidity", "Stablecoin", "Yield", "Ethereum", "Foundry"],
+    "status": "Live",
+    "repo": null,
+    "website": "https://mainstreet.finance/"
+  },
+  {
+    "name": "Frey AI Agent",
+    "description": "An autonomous AI agent built on the Eliza framework — capable of operating independently across social and on-chain environments.",
+    "labels": ["AI", "Eliza", "Agents", "Automation"],
     "status": "complete",
-    "repo": "https://github.com/chasebrown/nft-marketplace"
+    "repo": null,
+    "website": null
+  },
+  {
+    "name": "Baskets",
+    "description": "A tokenized REIT protocol bringing real estate investment on-chain — allowing users to gain fractional exposure to real-world property assets through ERC-20 basket tokens.",
+    "labels": ["Solidity", "RWA", "Tokenization", "DeFi", "Foundry"],
+    "status": "Live",
+    "repo": "https://github.com/TangibleTNFT/baskets-foundry",
+    "website": "https://www.tangible.store/baskets"
+  },
+  {
+    "name": "RWA Governance (re.al chain)",
+    "description": "Built, tested, and deployed the RWA governance token for re.al chain using Curve's battle-tested vote-escrow (veToken) library. Provided on-chain governance and voting weight for the protocol's real-world asset ecosystem.",
+    "labels": ["Solidity", "Governance", "RWA", "Foundry"],
+    "status": "Live",
+    "repo": "https://github.com/re-al-Foundation/rwa-contracts",
+    "website": "https://www.re.al/RWA"
+  },
+  {
+    "name": "Arcana",
+    "description": "An early EthenaFi competitor deployed on re.al chain, offering a yield-bearing stablecoin through delta-neutral positioning. Superseded by Mainstreet following the deprecation of re.al chain.",
+    "labels": ["Solidity", "Stablecoin", "Yield", "DeFi", "Foundry"],
+    "status": "Live",
+    "repo": "https://github.com/ArcanaFinance/arcana-contracts",
+    "website": "https://github.com/ArcanaFinance/arcana-contracts"
+  },
+  {
+    "name": "Komodo Labs Site",
+    "description": "This portfolio site — built with Astro, vanilla CSS, and zero frameworks. Fast, static, and fully custom.",
+    "labels": ["Astro", "TypeScript", "CSS"],
+    "status": "in-progress",
+    "repo": null,
+    "website": "https://komodolabs.io"
   }
 ]
