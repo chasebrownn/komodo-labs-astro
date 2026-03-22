@@ -2,6 +2,16 @@
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import CTA from '../components/CTA.astro';
+import { getCollection } from 'astro:content';
+
+const recentPosts = (await getCollection('blog'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
+function formatDate(date: Date) {
+  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+}
 ---
 
 <Layout
@@ -274,6 +284,83 @@ import Footer from '../components/Footer.astro';
     margin-bottom: 52px;
   }
 
+  /* ═══ ABOUT PREVIEW ═══ */
+  .about-preview {
+    padding: 100px 0;
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 64px;
+    align-items: center;
+    opacity: 0;
+    animation: fadeUp 0.5s ease 0.15s both;
+  }
+
+  .about-photo {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .about-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+  }
+
+  .about-body { }
+
+  .about-body h2 {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.8px;
+    margin-bottom: 20px;
+  }
+
+  .about-body p {
+    font-size: 15.5px;
+    font-weight: 300;
+    color: var(--gray-300);
+    line-height: 1.8;
+    margin-bottom: 14px;
+  }
+
+  .about-body p strong {
+    color: var(--white);
+    font-weight: 500;
+  }
+
+  .about-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 12px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--neon);
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: opacity 0.2s;
+  }
+
+  .about-link:hover { opacity: 0.75; }
+
+  @media (max-width: 768px) {
+    .about-preview {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+
+    .about-photo {
+      aspect-ratio: 4 / 3;
+      max-width: 200px;
+    }
+  }
+
   /* ═══ SERVICES ═══ */
   .services { padding: 100px 0; }
 
@@ -496,56 +583,109 @@ import Footer from '../components/Footer.astro';
     font-weight: 300;
   }
 
-  /* ═══ CTA ═══ */
-  .cta { padding: 100px 0; text-align: center; }
+  /* ═══ BLOG PREVIEW ═══ */
+  .blog-preview { padding: 100px 0; }
 
-  .cta-box {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 76px 48px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .cta-box::before {
-    content: '';
-    position: absolute;
-    top: -100px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 400px;
-    height: 400px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(207,255,4,0.04) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .cta-box h2 {
-    font-size: 40px;
-    font-weight: 700;
-    margin-bottom: 16px;
-    letter-spacing: -1px;
-    position: relative;
-  }
-
-  .cta-box h2 .neon { color: var(--neon); }
-
-  .cta-box p {
-    font-size: 16px;
-    color: var(--gray-400);
-    max-width: 460px;
-    margin: 0 auto 40px;
-    line-height: 1.7;
-    font-weight: 300;
-    position: relative;
-  }
-
-  .cta-actions {
+  .blog-header {
     display: flex;
-    justify-content: center;
-    gap: 14px;
-    position: relative;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 52px;
+  }
+
+  .blog-header h2 { margin-bottom: 0; }
+
+  .view-all {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--neon);
+    text-decoration: none;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    transition: opacity 0.2s;
+  }
+
+  .view-all:hover { opacity: 0.75; }
+
+  .blog-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .blog-row {
+    display: grid;
+    grid-template-columns: 120px 1fr auto;
+    align-items: center;
+    gap: 32px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+    transition: background 0.2s;
+    opacity: 0;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .blog-row:first-child { border-top: 1px solid var(--border); }
+
+  .blog-row:nth-child(1) { animation-delay: 0.05s; }
+  .blog-row:nth-child(2) { animation-delay: 0.12s; }
+  .blog-row:nth-child(3) { animation-delay: 0.19s; }
+
+  .blog-row:hover .blog-title { color: var(--neon); }
+
+  .blog-date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--gray-500);
+    white-space: nowrap;
+  }
+
+  .blog-text { min-width: 0; }
+
+  .blog-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 5px;
+    transition: color 0.2s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .blog-desc {
+    font-size: 13px;
+    color: var(--gray-400);
+    font-weight: 300;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .blog-tags {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .blog-tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    padding: 4px 9px;
+    border-radius: 5px;
+    background: var(--bg);
+    color: var(--gray-500);
+    border: 1px solid var(--border);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 768px) {
+    .blog-header { align-items: flex-start; flex-direction: column; gap: 12px; }
+    .blog-row { grid-template-columns: 1fr; gap: 8px; padding: 20px 0; }
+    .blog-tags { display: none; }
+    .blog-title { white-space: normal; overflow: visible; text-overflow: unset; }
+    .blog-desc { white-space: normal; overflow: visible; text-overflow: unset; }
   }
 
   /* ═══ FOOTER ═══ */
@@ -649,10 +789,35 @@ import Footer from '../components/Footer.astro';
 
   <div class="divider"></div>
 
+  <!-- ABOUT PREVIEW -->
+  <div class="about-preview">
+    <div class="about-photo">
+      <img src="/headshot.jpg" alt="Chase Brown" />
+    </div>
+    <div class="about-body">
+      <div class="section-label">About Me</div>
+      <h2>Who I am</h2>
+      <p>
+        I'm a software engineer and founder with over 8 years of experience designing and deploying production-grade systems across Web3, fintech, and AI. I got my start founding a development shop out of college and have since worked with financial institutions, hedge funds, and high-growth crypto-native teams.
+      </p>
+      <p>
+        Through <strong>Komodo Labs</strong>, I partner with companies to design, build, and scale software — from stablecoin architectures and cross-chain infrastructure to AI-powered workflows and custom automation.
+      </p>
+      <a href="/about" class="about-link">Read more →</a>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
   <!-- SERVICES -->
   <section class="services" id="services">
-    <div class="section-label">Services</div>
-    <h2 class="section-heading">What I do</h2>
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:52px;">
+      <div>
+        <div class="section-label">Services</div>
+        <h2 style="font-size:36px;font-weight:700;letter-spacing:-1px;margin-bottom:0;">What I do</h2>
+      </div>
+      <a href="/services" class="view-all">All services →</a>
+    </div>
     <div class="services-grid">
       <div class="service-card">
         <div class="service-icon">
@@ -701,6 +866,35 @@ import Footer from '../components/Footer.astro';
 
   <div class="divider"></div>
 
+  <!-- BLOG PREVIEW -->
+  <section class="blog-preview">
+    <div class="blog-header">
+      <div>
+        <div class="section-label">Writing</div>
+        <h2 class="section-heading">Recent posts</h2>
+      </div>
+      <a href="/blog" class="view-all">View all posts →</a>
+    </div>
+    <div class="blog-list">
+      {recentPosts.map((post) => (
+        <a href={`/blog/${post.id}`} class="blog-row">
+          <span class="blog-date">{formatDate(post.data.date)}</span>
+          <div class="blog-text">
+            <div class="blog-title">{post.data.title}</div>
+            <div class="blog-desc">{post.data.description}</div>
+          </div>
+          <div class="blog-tags">
+            {post.data.tags.slice(0, 2).map((tag) => (
+              <span class="blog-tag">{tag}</span>
+            ))}
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
   <!-- PROCESS -->
   <section class="process" id="process">
     <div class="section-label">Process</div>
@@ -732,17 +926,7 @@ import Footer from '../components/Footer.astro';
   <div class="divider"></div>
 
   <!-- CTA -->
-  <section class="cta" id="contact">
-    <div class="cta-box">
-      <div class="section-label">Let's build something</div>
-      <h2>Ready to <span class="neon">ship</span>?</h2>
-      <p>Whether you need an AI prototype, a smart contract audit, or end-to-end automation — let's talk.</p>
-      <div class="cta-actions">
-        <a href="mailto:chase@komodolabs.io" class="btn btn-primary">Get in Touch</a>
-        <a href={import.meta.env.PUBLIC_BOOKING_URL} target="_blank" rel="noopener" class="btn btn-secondary">Book a Call</a>
-      </div>
-    </div>
-  </section>
+  <CTA />
 
   <!-- FOOTER -->
   <Footer />

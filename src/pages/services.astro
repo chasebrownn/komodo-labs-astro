@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import CTA from '../components/CTA.astro';
 
 const services = [
   {
@@ -248,104 +249,12 @@ const icons = {
     margin: 0;
   }
 
-  /* CTA */
-  .cta {
-    padding: 100px 0;
-    text-align: center;
-  }
-
-  .cta-box {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 80px 48px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .cta-box::before {
-    content: '';
-    position: absolute;
-    top: -120px; left: 50%;
-    transform: translateX(-50%);
-    width: 500px; height: 500px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(207,255,4,0.05) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .cta-box h2 {
-    font-size: 40px;
-    font-weight: 700;
-    letter-spacing: -1px;
-    margin-bottom: 16px;
-    position: relative;
-  }
-
-  .cta-box h2 span { color: var(--neon); }
-
-  .cta-box p {
-    font-size: 16px;
-    color: var(--gray-400);
-    max-width: 480px;
-    margin: 0 auto 40px;
-    line-height: 1.7;
-    font-weight: 300;
-    position: relative;
-  }
-
-  .cta-actions {
-    display: flex;
-    justify-content: center;
-    gap: 14px;
-    position: relative;
-  }
-
-  .btn {
-    font-family: var(--font-display);
-    font-size: 15px;
-    font-weight: 500;
-    padding: 14px 32px;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.3s;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-  }
-
-  .btn-primary {
-    background: var(--neon);
-    color: var(--black);
-    font-weight: 600;
-  }
-
-  .btn-primary:hover {
-    box-shadow: 0 0 32px var(--neon-glow);
-    transform: translateY(-2px);
-  }
-
-  .btn-secondary {
-    background: var(--card);
-    color: var(--gray-200);
-    border: 1px solid var(--border);
-  }
-
-  .btn-secondary:hover {
-    border-color: var(--border-hi);
-    background: var(--card-hover);
-    color: var(--white);
-  }
-
   @media (max-width: 768px) {
     .page-header { padding: 60px 0 52px; }
     .page-header h1 { font-size: 36px; }
     .services-grid { grid-template-columns: 1fr; }
     .service-card,
     .service-card:nth-child(n) { border-radius: 14px; }
-    .cta-box { padding: 52px 24px; }
-    .cta-actions { flex-direction: column; align-items: center; }
   }
 </style>
 
@@ -383,17 +292,7 @@ const icons = {
   <div class="divider"></div>
 
   <!-- CTA -->
-  <section class="cta">
-    <div class="cta-box">
-      <div class="section-label">Let's build something</div>
-      <h2>Ready to <span>ship</span>?</h2>
-      <p>Have a protocol to launch, a system to automate, or an AI idea to bring to life? Let's talk about what you're building.</p>
-      <div class="cta-actions">
-        <a href="mailto:chase@komodolabs.io" class="btn btn-primary">Get in Touch</a>
-        <a href={import.meta.env.PUBLIC_BOOKING_URL} target="_blank" rel="noopener" class="btn btn-secondary">Book a Call</a>
-      </div>
-    </div>
-  </section>
+  <CTA tagline="Have a protocol to launch, a system to automate, or an AI idea to bring to life? Let's talk about what you're building." />
 
   <Footer />
 
