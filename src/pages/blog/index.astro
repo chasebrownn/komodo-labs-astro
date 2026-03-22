@@ -1,0 +1,166 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+function formatDate(date: Date) {
+  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+}
+---
+
+<Layout
+  title="Blog — Komodo Labs"
+  description="Writing on smart contracts, AI agents, DeFi architecture, and engineering in production."
+>
+<style>
+  .page-header {
+    padding: 72px 0 56px;
+    opacity: 0;
+    animation: fadeUp 0.5s ease 0.1s both;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--gray-500);
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .page-header h1 {
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: -1px;
+  }
+
+  .posts {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-bottom: 100px;
+    opacity: 0;
+    animation: fadeUp 0.5s ease 0.2s both;
+  }
+
+  .post-row {
+    display: grid;
+    grid-template-columns: 140px 1fr auto;
+    align-items: center;
+    gap: 32px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+    transition: background 0.2s;
+    border-radius: 4px;
+  }
+
+  .post-row:first-child { border-top: 1px solid var(--border); }
+
+  .post-row:hover .post-title { color: var(--neon); }
+
+  .post-date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--gray-500);
+    white-space: nowrap;
+  }
+
+  .post-content { min-width: 0; }
+
+  .post-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 6px;
+    transition: color 0.2s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .post-desc {
+    font-size: 13.5px;
+    color: var(--gray-400);
+    font-weight: 300;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .post-tags {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    padding: 4px 9px;
+    border-radius: 5px;
+    background: var(--bg);
+    color: var(--gray-500);
+    border: 1px solid var(--border);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 768px) {
+    .post-row {
+      grid-template-columns: 1fr;
+      gap: 10px;
+      padding: 20px 0;
+    }
+
+    .post-tags { display: none; }
+
+    .post-title {
+      white-space: normal;
+      overflow: visible;
+      text-overflow: unset;
+    }
+
+    .post-desc {
+      white-space: normal;
+      overflow: visible;
+      text-overflow: unset;
+    }
+  }
+</style>
+
+<div class="wrapper">
+
+  <Nav />
+
+  <div class="page-header">
+    <div class="section-label">Writing</div>
+    <h1>Blog</h1>
+  </div>
+
+  <div class="posts">
+    {posts.map((post) => (
+      <a href={`/blog/${post.id}`} class="post-row">
+        <span class="post-date">{formatDate(post.data.date)}</span>
+        <div class="post-content">
+          <div class="post-title">{post.data.title}</div>
+          <div class="post-desc">{post.data.description}</div>
+        </div>
+        <div class="post-tags">
+          {post.data.tags.slice(0, 2).map((tag) => (
+            <span class="tag">{tag}</span>
+          ))}
+        </div>
+      </a>
+    ))}
+  </div>
+
+  <Footer />
+
+</div>
+
+</Layout>

@@ -1,0 +1,208 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+function formatDate(date: Date) {
+  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+---
+
+<Layout
+  title={`${post.data.title} — Komodo Labs`}
+  description={post.data.description}
+>
+<style>
+  .post-header {
+    padding: 72px 0 52px;
+    max-width: 720px;
+    opacity: 0;
+    animation: fadeUp 0.5s ease 0.1s both;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--gray-500);
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .section-label a {
+    color: var(--gray-500);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .section-label a:hover { color: var(--neon); }
+
+  .post-header h1 {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .post-date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--gray-500);
+  }
+
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    padding: 4px 9px;
+    border-radius: 5px;
+    background: var(--bg);
+    color: var(--gray-500);
+    border: 1px solid var(--border);
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin-bottom: 56px;
+  }
+
+  /* PROSE */
+  .prose {
+    max-width: 720px;
+    margin-bottom: 100px;
+    opacity: 0;
+    animation: fadeUp 0.5s ease 0.2s both;
+  }
+
+  .prose :global(h2) {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin: 48px 0 16px;
+    color: var(--white);
+  }
+
+  .prose :global(h3) {
+    font-size: 19px;
+    font-weight: 600;
+    margin: 36px 0 12px;
+    color: var(--white);
+  }
+
+  .prose :global(p) {
+    font-size: 16px;
+    color: var(--gray-300);
+    line-height: 1.85;
+    font-weight: 300;
+    margin-bottom: 20px;
+  }
+
+  .prose :global(strong) {
+    color: var(--white);
+    font-weight: 600;
+  }
+
+  .prose :global(a) {
+    color: var(--neon);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .prose :global(ul), .prose :global(ol) {
+    margin: 0 0 20px 20px;
+  }
+
+  .prose :global(li) {
+    font-size: 16px;
+    color: var(--gray-300);
+    line-height: 1.8;
+    font-weight: 300;
+    margin-bottom: 6px;
+  }
+
+  .prose :global(pre) {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    overflow-x: auto;
+    margin: 24px 0;
+  }
+
+  .prose :global(code) {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--gray-200);
+  }
+
+  .prose :global(p code), .prose :global(li code) {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 13px;
+    color: var(--neon);
+  }
+
+  .prose :global(blockquote) {
+    border-left: 2px solid var(--neon);
+    padding-left: 20px;
+    margin: 28px 0;
+  }
+
+  .prose :global(blockquote p) {
+    color: var(--gray-300);
+    font-style: italic;
+  }
+
+  .prose :global(hr) {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 40px 0;
+  }
+</style>
+
+<div class="wrapper">
+
+  <Nav />
+
+  <div class="post-header">
+    <div class="section-label"><a href="/blog">Blog</a> / Writing</div>
+    <h1>{post.data.title}</h1>
+    <div class="post-meta">
+      <span class="post-date">{formatDate(post.data.date)}</span>
+      {post.data.tags.map((tag) => <span class="tag">{tag}</span>)}
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <article class="prose">
+    <Content />
+  </article>
+
+  <Footer />
+
+</div>
+
+</Layout>
