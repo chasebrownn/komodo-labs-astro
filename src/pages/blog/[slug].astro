@@ -20,6 +20,12 @@ function formatDate(date: Date) {
 }
 
 const readingTime = Math.ceil(post.body.split(/\s+/).length / 200);
+
+const allPosts = await getCollection('blog');
+const relatedPosts = allPosts
+  .filter((p) => p.id !== post.id && p.data.tags.some((t) => post.data.tags.includes(t)))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
 ---
 
 <Layout
@@ -81,7 +87,7 @@ const readingTime = Math.ceil(post.body.split(/\s+/).length / 200);
   .post-meta {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 24px;
   }
 
   .post-meta-row {
@@ -234,6 +240,58 @@ const readingTime = Math.ceil(post.body.split(/\s+/).length / 200);
     border-top: 1px solid var(--border);
     margin: 40px 0;
   }
+
+  .related {
+    max-width: 720px;
+    margin-bottom: 100px;
+  }
+
+  .related-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--gray-500);
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .related-posts {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .related-row {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    align-items: center;
+    gap: 24px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .related-row:first-child { border-top: 1px solid var(--border); }
+
+  .related-date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--gray-400);
+    white-space: nowrap;
+  }
+
+  .related-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--white);
+    transition: color 0.2s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .related-row:hover .related-title { color: var(--neon); }
 </style>
 
 <div class="wrapper">
@@ -244,7 +302,7 @@ const readingTime = Math.ceil(post.body.split(/\s+/).length / 200);
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M8.5 2.5L4 7L8.5 11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
-      Back to Blogs
+      Back to Blog
     </a>
 
   <div class="post-header">
@@ -266,6 +324,20 @@ const readingTime = Math.ceil(post.body.split(/\s+/).length / 200);
   <article class="prose">
     <Content />
   </article>
+
+  {relatedPosts.length > 0 && (
+    <div class="related">
+      <div class="related-label">Related Posts</div>
+      <div class="related-posts">
+        {relatedPosts.map((p) => (
+          <a href={`/blog/${p.id}`} class="related-row">
+            <span class="related-date">{formatDate(p.data.date)}</span>
+            <span class="related-title">{p.data.title}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  )}
 
   <Footer />
 
