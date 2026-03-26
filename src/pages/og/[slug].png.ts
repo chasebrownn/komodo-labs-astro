@@ -38,7 +38,7 @@ export const GET: APIRoute = async ({ props }) => {
     day: 'numeric',
   });
 
-  const fontSize = title.length > 55 ? 40 : title.length > 35 ? 48 : 55;
+  const fontSize = title.length > 55 ? 52 : title.length > 35 ? 62 : 70;
   const visibleTags = (tags as string[]).slice(0, 3);
 
   const svg = await satori(
@@ -139,7 +139,7 @@ export const GET: APIRoute = async ({ props }) => {
                             display: 'flex',
                             fontFamily: 'Outfit',
                             fontWeight: 400,
-                            fontSize: '31px',
+                            fontSize: '50px',
                             color: '#737373',
                             letterSpacing: '0px',
                             lineHeight: 1.3,
