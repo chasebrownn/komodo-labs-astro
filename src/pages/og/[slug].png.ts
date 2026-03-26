@@ -38,7 +38,7 @@ export const GET: APIRoute = async ({ props }) => {
     day: 'numeric',
   });
 
-  const fontSize = title.length > 55 ? 48 : title.length > 35 ? 58 : 68;
+  const fontSize = title.length > 55 ? 40 : title.length > 35 ? 48 : 55;
   const visibleTags = (tags as string[]).slice(0, 3);
 
   const svg = await satori(
@@ -94,7 +94,7 @@ export const GET: APIRoute = async ({ props }) => {
               ],
             },
           },
-          // Middle: accent bar + title
+          // Middle: accent bar + headline/title column
           {
             type: 'div',
             props: {
@@ -102,7 +102,7 @@ export const GET: APIRoute = async ({ props }) => {
                 display: 'flex',
                 flexDirection: 'row',
                 alignItems: 'flex-start',
-                gap: '24px',
+                gap: '28px',
                 flexGrow: 1,
                 paddingTop: '48px',
                 paddingBottom: '48px',
@@ -126,14 +126,43 @@ export const GET: APIRoute = async ({ props }) => {
                   props: {
                     style: {
                       display: 'flex',
-                      fontFamily: 'Outfit',
-                      fontWeight: 700,
-                      fontSize: `${fontSize}px`,
-                      color: '#ffffff',
-                      letterSpacing: '-2px',
-                      lineHeight: 1.1,
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                      gap: '16px',
+                      flexGrow: 1,
                     },
-                    children: title,
+                    children: [
+                      {
+                        type: 'div',
+                        props: {
+                          style: {
+                            display: 'flex',
+                            fontFamily: 'Outfit',
+                            fontWeight: 400,
+                            fontSize: '31px',
+                            color: '#737373',
+                            letterSpacing: '0px',
+                            lineHeight: 1.3,
+                          },
+                          children: 'Check out my blog post.',
+                        },
+                      },
+                      {
+                        type: 'div',
+                        props: {
+                          style: {
+                            display: 'flex',
+                            fontFamily: 'Outfit',
+                            fontWeight: 800,
+                            fontSize: `${fontSize}px`,
+                            color: '#ffffff',
+                            letterSpacing: '-3px',
+                            lineHeight: 1.05,
+                          },
+                          children: title,
+                        },
+                      },
+                    ],
                   },
                 },
               ],
