@@ -29,7 +29,7 @@ const readingTime = Math.ceil(post.body.split(/\s+/).length / 200);
 >
 <style>
   .post-header {
-    padding: 72px 0 52px;
+    padding: 48px 0 52px;
     max-width: 720px;
     opacity: 0;
     animation: fadeUp 0.5s ease 0.1s both;
@@ -51,6 +51,24 @@ const readingTime = Math.ceil(post.body.split(/\s+/).length / 200);
   }
 
   .section-label a:hover { color: var(--neon); }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--gray-500);
+    text-decoration: none;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 32px;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover { color: var(--neon); }
+  .back-link svg { transition: transform 0.2s; }
+  .back-link:hover svg { transform: translateX(-3px); }
 
   .post-header h1 {
     font-size: clamp(28px, 4vw, 44px);
@@ -101,6 +119,7 @@ const readingTime = Math.ceil(post.body.split(/\s+/).length / 200);
   }
 
   .author-name:hover {
+    color: var(--neon);
     text-decoration: underline;
     text-underline-offset: 3px;
   }
@@ -221,8 +240,14 @@ const readingTime = Math.ceil(post.body.split(/\s+/).length / 200);
 
   <Nav />
 
+  <a href="/blog" class="back-link">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8.5 2.5L4 7L8.5 11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Back to Blogs
+    </a>
+
   <div class="post-header">
-    <div class="section-label"><a href="/blog">Blog</a> / Writing</div>
     <h1>{post.data.title}</h1>
     <div class="post-meta">
       <div class="post-meta-row">
