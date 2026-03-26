@@ -62,6 +62,12 @@ const readingTime = Math.ceil(post.body.split(/\s+/).length / 200);
 
   .post-meta {
     display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .post-meta-row {
+    display: flex;
     align-items: center;
     gap: 16px;
     flex-wrap: wrap;
@@ -71,6 +77,32 @@ const readingTime = Math.ceil(post.body.split(/\s+/).length / 200);
     font-family: var(--font-mono);
     font-size: 11px;
     color: var(--gray-400);
+  }
+
+  .author {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .author-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--border-hi);
+  }
+
+  .author-name {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--gray-400);
+    text-decoration: none;
+  }
+
+  .author-name:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 
   .tag {
@@ -193,8 +225,14 @@ const readingTime = Math.ceil(post.body.split(/\s+/).length / 200);
     <div class="section-label"><a href="/blog">Blog</a> / Writing</div>
     <h1>{post.data.title}</h1>
     <div class="post-meta">
-      <span class="post-date">{formatDate(post.data.date)} | {readingTime} min read</span>
-      {post.data.tags.map((tag) => <span class="tag">{tag}</span>)}
+      <div class="post-meta-row">
+        <span class="post-date">{formatDate(post.data.date)} | {readingTime} min read</span>
+        {post.data.tags.map((tag) => <span class="tag">{tag}</span>)}
+      </div>
+      <div class="author">
+        <img class="author-avatar" src="/headshot.jpg" alt="Chase Brown" />
+        <a class="author-name" href="https://www.linkedin.com/in/chase-brown-41a934173/" target="_blank" rel="noopener">Chase Brown</a>
+      </div>
     </div>
   </div>
 
