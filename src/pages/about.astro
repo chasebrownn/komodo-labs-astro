@@ -138,6 +138,88 @@ import Footer from '../components/Footer.astro';
     margin: 32px 0;
   }
 
+  .tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 40px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .tab-btn {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--gray-500);
+    background: none;
+    border: none;
+    padding: 10px 16px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .tab-btn:hover { color: var(--gray-200); }
+
+  .tab-btn.active {
+    color: var(--white);
+    border-bottom-color: var(--neon);
+  }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  .stack-section {}
+
+  .stack-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .stack-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 24px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+  }
+
+  .stack-row:first-child { border-top: 1px solid var(--border); }
+
+  .stack-category {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--gray-400);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding-top: 4px;
+  }
+
+  .stack-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .stack-item {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--white);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 14px;
+    transition: border-color 0.2s;
+  }
+
+  .stack-item:hover { border-color: var(--border-hi); }
+
+  @media (max-width: 600px) {
+    .stack-row { grid-template-columns: 1fr; gap: 12px; }
+  }
+
   @media (max-width: 900px) {
     .about {
       grid-template-columns: 1fr;
@@ -195,11 +277,14 @@ import Footer from '../components/Footer.astro';
       </div>
     </aside>
 
-    <!-- BIO -->
+    <!-- TABBED CONTENT -->
     <main class="content">
-      <div class="section-label">About</div>
-      <h1>About Me</h1>
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="about">About Me</button>
+        <button class="tab-btn" data-tab="tools">Tools</button>
+      </div>
 
+      <div class="tab-panel active" id="tab-about">
       <div class="bio">
         <p class="highlight">
           I'm a software engineer, builder, and founder with over 8 years of experience designing and deploying production-grade systems across Web3, fintech, and now AI.
@@ -251,6 +336,37 @@ import Footer from '../components/Footer.astro';
           Build systems that work, scale, and last.
         </p>
       </div>
+      </div>
+
+      <div class="tab-panel" id="tab-tools">
+        <div class="stack-rows">
+          <div class="stack-row">
+            <span class="stack-category">Languages</span>
+            <div class="stack-items">
+              {['Solidity', 'TypeScript', 'Rust', 'Python'].map(t => <span class="stack-item">{t}</span>)}
+            </div>
+          </div>
+          <div class="stack-row">
+            <span class="stack-category">Frameworks & Tools</span>
+            <div class="stack-items">
+              {['Foundry', 'Anchor / Cargo', 'Next.js', 'Astro', 'Node.js', 'n8n', 'Claude Code', 'Postman'].map(t => <span class="stack-item">{t}</span>)}
+            </div>
+          </div>
+          <div class="stack-row">
+            <span class="stack-category">Infrastructure</span>
+            <div class="stack-items">
+              {['Vercel', 'AWS', 'Digital Ocean'].map(t => <span class="stack-item">{t}</span>)}
+            </div>
+          </div>
+          <div class="stack-row">
+            <span class="stack-category">AI</span>
+            <div class="stack-items">
+              {['Anthropic', 'OpenAI'].map(t => <span class="stack-item">{t}</span>)}
+            </div>
+          </div>
+        </div>
+      </div>
+
     </main>
 
   </div>
@@ -258,5 +374,19 @@ import Footer from '../components/Footer.astro';
   <Footer />
 
 </div>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.tab-btn');
+  const panels = document.querySelectorAll<HTMLElement>('.tab-panel');
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(`tab-${btn.dataset.tab}`)?.classList.add('active');
+    });
+  });
+</script>
 
 </Layout>
