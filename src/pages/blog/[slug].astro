@@ -16,7 +16,18 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 
 function formatDate(date: Date) {
-  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+}
+
+function timeAgo(date: Date) {
+  const utcDate = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
+  const days = Math.floor((Date.now() - utcDate) / (1000 * 60 * 60 * 24));
+  if (days === 0) return 'Today';
+  if (days < 30) return `${days}d ago`;
+  const months = Math.floor(days / 30);
+  if (months < 12) return `${months}mo ago`;
+  const years = Math.floor(days / 365);
+  return `${years}y ago`;
 }
 
 const readingTime = Math.ceil(post.body.split(/\s+/).length / 200);
@@ -93,7 +104,7 @@ const relatedPosts = allPosts
   .post-meta-row {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 8px;
     flex-wrap: wrap;
   }
 
@@ -309,7 +320,7 @@ const relatedPosts = allPosts
     <h1>{post.data.title}</h1>
     <div class="post-meta">
       <div class="post-meta-row">
-        <span class="post-date">{formatDate(post.data.date)} | {readingTime} min read</span>
+        <span class="post-date">{timeAgo(post.data.date)} | {formatDate(post.data.date)} | {readingTime} min read</span>
         {post.data.tags.map((tag) => <span class="tag">{tag}</span>)}
       </div>
       <div class="author">
