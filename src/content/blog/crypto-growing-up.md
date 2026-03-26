@@ -13,7 +13,7 @@ But first let me just say... I am no financial advisor. However, I've been in th
 
 ## The Last Cycle Was Real — And Also Ridiculous
 
-The 2020–2022 run was genuinely historic. DeFi went from a niche experiment to billions in TVL. Layer 2s entered the space in ab. Ethereum shipped the merge. Cross-chain infrastructure matured. Real engineers shipped real things.
+The 2020–2022 run was genuinely historic. DeFi went from a niche experiment to billions in TVL. Layer 2s entered the space in abundance. Ethereum shipped the merge. Cross-chain infrastructure matured. Real engineers shipped real things.
 
 And also: a JPEG of a bored ape sold for $3.4 million. A dog-themed token with no utility hit a $90 billion market cap. A Ponzi disguised as an algorithmic stablecoin wiped out $40 billion in a weekend. A celebrity launched a token, got paid to promote it, and dumped on retail within 72 hours.
 
