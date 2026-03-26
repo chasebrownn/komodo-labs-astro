@@ -38,6 +38,8 @@ export const GET: APIRoute = async ({ props }) => {
     day: 'numeric',
   });
 
+  const readingTime = Math.ceil(post.body.split(/\s+/).length / 200);
+
   const fontSize = title.length > 55 ? 52 : title.length > 35 ? 62 : 70;
   const visibleTags = (tags as string[]).slice(0, 3);
 
@@ -220,7 +222,7 @@ export const GET: APIRoute = async ({ props }) => {
                       fontSize: '26px',
                       color: '#525252',
                     },
-                    children: formattedDate,
+                    children: `${formattedDate} | ${readingTime} min read`,
                   },
                 },
               ],
