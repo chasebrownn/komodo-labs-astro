@@ -9,8 +9,15 @@ const recentPosts = (await getCollection('blog'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 3);
 
-function formatDate(date: Date) {
-  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+function timeAgo(date: Date) {
+  const utcDate = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
+  const days = Math.floor((Date.now() - utcDate) / (1000 * 60 * 60 * 24));
+  if (days === 0) return 'Today';
+  if (days < 30) return `${days}d ago`;
+  const months = Math.floor(days / 30);
+  if (months < 12) return `${months}mo ago`;
+  const years = Math.floor(days / 365);
+  return `${years}y ago`;
 }
 ---
 
@@ -637,7 +644,7 @@ function formatDate(date: Date) {
   .blog-date {
     font-family: var(--font-mono);
     font-size: 11px;
-    color: var(--gray-500);
+    color: var(--gray-400);
     white-space: nowrap;
   }
 
@@ -675,7 +682,7 @@ function formatDate(date: Date) {
     padding: 4px 9px;
     border-radius: 5px;
     background: var(--bg);
-    color: var(--gray-500);
+    color: var(--gray-400);
     border: 1px solid var(--border);
     white-space: nowrap;
   }
@@ -878,7 +885,7 @@ function formatDate(date: Date) {
     <div class="blog-list">
       {recentPosts.map((post) => (
         <a href={`/blog/${post.id}`} class="blog-row">
-          <span class="blog-date">{formatDate(post.data.date)}</span>
+          <span class="blog-date">{timeAgo(post.data.date)} | {Math.ceil(post.body.split(/\s+/).length / 200)} min read</span>
           <div class="blog-text">
             <div class="blog-title">{post.data.title}</div>
             <div class="blog-desc">{post.data.description}</div>
