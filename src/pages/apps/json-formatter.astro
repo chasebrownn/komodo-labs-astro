@@ -1,0 +1,456 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout
+  title="JSON Formatter — Komodo Labs"
+  description="Paste messy JSON and get it back clean, formatted, and syntax highlighted. No tracking, no uploads."
+>
+<style>
+  body { overflow: hidden; }
+
+  .app-layout {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    height: 100dvh;
+    border-top: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  /* ---- LEFT PANEL ---- */
+  .info-panel {
+    border-right: 1px solid var(--border);
+    padding: 40px 32px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--gray-500);
+    text-decoration: none;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    flex-shrink: 0;
+  }
+
+  .back-link:hover { color: var(--neon); }
+  .back-link svg { transition: transform 0.2s; }
+  .back-link:hover svg { transform: translateX(-3px); }
+
+  .info-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--gray-500);
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .info-title h1 {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+
+  .info-body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .info-body p {
+    font-size: 13.5px;
+    font-weight: 300;
+    color: var(--gray-300);
+    line-height: 1.8;
+  }
+
+  .info-body strong { color: var(--white); font-weight: 500; }
+
+  .feature-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--gray-300);
+    font-weight: 300;
+  }
+
+  .feature-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--neon);
+    flex-shrink: 0;
+  }
+
+  /* ---- RIGHT PANEL ---- */
+  .formatter-panel {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .toolbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .btn-tool {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 7px 14px;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+    background: none;
+    color: var(--gray-400);
+  }
+
+  .btn-tool:hover { color: var(--white); border-color: var(--border-hi); }
+
+  .btn-tool.primary {
+    background: var(--neon);
+    color: var(--black);
+    border-color: var(--neon);
+    font-weight: 600;
+  }
+
+  .btn-tool.primary:hover { opacity: 0.85; color: var(--black); border-color: var(--neon); }
+
+  .btn-tool.copied {
+    color: var(--neon);
+    border-color: var(--neon);
+  }
+
+  .error-msg {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: #f87171;
+    letter-spacing: 0.5px;
+    opacity: 0;
+    transition: opacity 0.2s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 300px;
+  }
+
+  .error-msg.visible { opacity: 1; }
+
+  .panes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .pane {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .pane:first-child { border-right: 1px solid var(--border); }
+
+  .pane-header {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray-500);
+    padding: 8px 20px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .btn-copy-output {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--gray-500);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.2s;
+  }
+
+  .btn-copy-output:hover { color: var(--neon); }
+  .btn-copy-output.copied { color: var(--neon); }
+
+  textarea {
+    flex: 1;
+    resize: none;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--gray-300);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.65;
+    padding: 16px 20px;
+    caret-color: var(--neon);
+    overflow: auto;
+  }
+
+  textarea::placeholder { color: var(--gray-600, #444); }
+
+  .output {
+    flex: 1;
+    overflow: auto;
+    padding: 16px 20px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.65;
+    white-space: pre;
+    margin: 0;
+    color: var(--gray-400);
+  }
+
+  .output.empty { color: var(--gray-600, #444); font-style: italic; }
+
+  /* Syntax highlight colors */
+  .output :global(.hl-key)  { color: #e2e8f0; }
+  .output :global(.hl-str)  { color: #86efac; }
+  .output :global(.hl-num)  { color: #93c5fd; }
+  .output :global(.hl-bool) { color: #c084fc; }
+  .output :global(.hl-null) { color: #fb923c; }
+
+  /* ---- MOBILE ---- */
+  @media (max-width: 768px) {
+    body { overflow: auto; }
+
+    .app-layout {
+      grid-template-columns: 1fr;
+      height: auto;
+      overflow: visible;
+    }
+
+    .info-panel {
+      border-right: none;
+      border-bottom: 1px solid var(--border);
+      padding: 28px 24px;
+    }
+
+    .formatter-panel { min-height: 80vh; }
+
+    .panes {
+      grid-template-columns: 1fr;
+      grid-template-rows: 240px 240px;
+    }
+
+    .pane:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+  }
+</style>
+
+<div class="app-layout">
+
+  <!-- LEFT: Info panel -->
+  <aside class="info-panel">
+    <a href="/apps" class="back-link">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M8.5 2.5L4 7L8.5 11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Back to Apps
+    </a>
+
+    <div class="info-title">
+      <div class="info-label">Developer Tools</div>
+      <h1>JSON Formatter</h1>
+    </div>
+
+    <div class="info-body">
+      <p>
+        Paste any raw or minified <strong>JSON</strong> and instantly get it back clean, indented, and syntax highlighted. Runs entirely in your browser — nothing is sent anywhere.
+      </p>
+      <p>
+        Useful for reading API responses, debugging payloads, cleaning up config files, or just making sense of a wall of compressed data.
+      </p>
+
+      <div class="feature-list">
+        <div class="feature-item">
+          <span class="feature-dot"></span>
+          Pretty-print with 2-space indentation
+        </div>
+        <div class="feature-item">
+          <span class="feature-dot"></span>
+          Minify to strip whitespace
+        </div>
+        <div class="feature-item">
+          <span class="feature-dot"></span>
+          Syntax highlighting for keys, strings, numbers, booleans
+        </div>
+        <div class="feature-item">
+          <span class="feature-dot"></span>
+          Inline error messages for invalid JSON
+        </div>
+        <div class="feature-item">
+          <span class="feature-dot"></span>
+          One-click copy to clipboard
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- RIGHT: Formatter -->
+  <main class="formatter-panel">
+
+    <div class="toolbar">
+      <button class="btn-tool primary" id="btn-format">Format</button>
+      <button class="btn-tool" id="btn-minify">Minify</button>
+      <button class="btn-tool" id="btn-copy">Copy</button>
+      <button class="btn-tool" id="btn-clear">Clear</button>
+      <span class="error-msg" id="error-msg"></span>
+    </div>
+
+    <div class="panes">
+      <div class="pane">
+        <div class="pane-header">Input</div>
+        <textarea id="input" placeholder='Paste JSON here — e.g. {"name":"Chase","role":"founder"}'></textarea>
+      </div>
+      <div class="pane">
+        <div class="pane-header">
+          <span>Output</span>
+          <button class="btn-copy-output" id="btn-copy-output">Copy</button>
+        </div>
+        <pre class="output empty" id="output">Formatted output will appear here.</pre>
+      </div>
+    </div>
+
+  </main>
+
+</div>
+
+<script>
+  const inputEl  = document.getElementById('input') as HTMLTextAreaElement;
+  const outputEl = document.getElementById('output')!;
+  const errorEl  = document.getElementById('error-msg')!;
+  const btnFormat      = document.getElementById('btn-format')!;
+  const btnMinify      = document.getElementById('btn-minify')!;
+  const btnCopy        = document.getElementById('btn-copy')!;
+  const btnCopyOutput  = document.getElementById('btn-copy-output')!;
+  const btnClear       = document.getElementById('btn-clear')!;
+
+  function highlight(json: string): string {
+    const escaped = json
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+
+    return escaped.replace(
+      /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+      (match) => {
+        if (/:$/.test(match)) return `<span class="hl-key">${match}</span>`;
+        if (/^"/.test(match))  return `<span class="hl-str">${match}</span>`;
+        if (/true|false/.test(match)) return `<span class="hl-bool">${match}</span>`;
+        if (/null/.test(match)) return `<span class="hl-null">${match}</span>`;
+        return `<span class="hl-num">${match}</span>`;
+      }
+    );
+  }
+
+  function showError(msg: string) {
+    errorEl.textContent = msg;
+    errorEl.classList.add('visible');
+  }
+
+  function clearError() {
+    errorEl.classList.remove('visible');
+  }
+
+  function setOutput(text: string) {
+    outputEl.innerHTML = highlight(text);
+    outputEl.classList.remove('empty');
+  }
+
+  function tryParse(): unknown | null {
+    const raw = inputEl.value.trim();
+    if (!raw) return null;
+    try {
+      const parsed = JSON.parse(raw);
+      clearError();
+      return parsed;
+    } catch (e: unknown) {
+      showError(e instanceof Error ? e.message : 'Invalid JSON');
+      return null;
+    }
+  }
+
+  btnFormat.addEventListener('click', () => {
+    const parsed = tryParse();
+    if (parsed !== null) setOutput(JSON.stringify(parsed, null, 2));
+  });
+
+  btnMinify.addEventListener('click', () => {
+    const parsed = tryParse();
+    if (parsed !== null) setOutput(JSON.stringify(parsed));
+  });
+
+  async function copyOutput(btn: Element) {
+    const text = outputEl.textContent;
+    if (!text || outputEl.classList.contains('empty')) return;
+    await navigator.clipboard.writeText(text);
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'Copy';
+      btn.classList.remove('copied');
+    }, 1500);
+  }
+
+  btnCopy.addEventListener('click', () => copyOutput(btnCopy));
+  btnCopyOutput.addEventListener('click', () => copyOutput(btnCopyOutput));
+
+  btnClear.addEventListener('click', () => {
+    inputEl.value = '';
+    outputEl.innerHTML = 'Formatted output will appear here.';
+    outputEl.classList.add('empty');
+    clearError();
+  });
+
+  // Auto-format on paste
+  inputEl.addEventListener('paste', () => {
+    setTimeout(() => {
+      const parsed = tryParse();
+      if (parsed !== null) setOutput(JSON.stringify(parsed, null, 2));
+    }, 0);
+  });
+
+  // Cmd/Ctrl+Enter to format
+  inputEl.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+      e.preventDefault();
+      const parsed = tryParse();
+      if (parsed !== null) setOutput(JSON.stringify(parsed, null, 2));
+    }
+  });
+</script>
+
+</Layout>

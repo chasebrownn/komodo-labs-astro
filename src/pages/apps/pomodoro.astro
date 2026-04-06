@@ -1,6 +1,5 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import Nav from '../../components/Nav.astro';
 ---
 
 <Layout
@@ -11,16 +10,10 @@ import Nav from '../../components/Nav.astro';
   /* Lock viewport on desktop */
   body { overflow: hidden; }
 
-  .nav-wrap-outer {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 32px;
-  }
-
   .app-layout {
     display: grid;
     grid-template-columns: 340px 1fr;
-    height: calc(100dvh - 81px);
+    height: 100dvh;
     border-top: 1px solid var(--border);
     overflow: hidden;
   }
@@ -291,10 +284,6 @@ import Nav from '../../components/Nav.astro';
     }
   }
 </style>
-
-<div class="nav-wrap-outer">
-  <Nav />
-</div>
 
 <div class="app-layout">
 
