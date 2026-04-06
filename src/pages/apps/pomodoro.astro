@@ -26,7 +26,10 @@ import Layout from '../../layouts/Layout.astro';
     display: flex;
     flex-direction: column;
     gap: 32px;
+    scrollbar-width: none;
   }
+
+  .info-panel::-webkit-scrollbar { display: none; }
 
   .app-logo {
     display: inline-flex;
