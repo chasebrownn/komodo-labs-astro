@@ -1,0 +1,517 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+---
+
+<Layout
+  title="Pomodoro Timer — Komodo Labs"
+  description="A clean Pomodoro focus timer. 25 minutes of focused work, short breaks, long breaks. No accounts, no tracking."
+>
+<style>
+  /* Lock viewport on desktop */
+  body { overflow: hidden; }
+
+  .nav-wrap-outer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  .app-layout {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    height: calc(100dvh - 81px);
+    border-top: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  /* ---- LEFT PANEL ---- */
+  .info-panel {
+    border-right: 1px solid var(--border);
+    padding: 40px 36px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--gray-500);
+    text-decoration: none;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    flex-shrink: 0;
+  }
+
+  .back-link:hover { color: var(--neon); }
+  .back-link svg { transition: transform 0.2s; }
+  .back-link:hover svg { transform: translateX(-3px); }
+
+  .info-title {
+    flex-shrink: 0;
+  }
+
+  .info-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--gray-500);
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .info-title h1 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+
+  .info-body {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .info-body p {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--gray-300);
+    line-height: 1.8;
+  }
+
+  .info-body strong {
+    color: var(--white);
+    font-weight: 500;
+  }
+
+  .info-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .info-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--gray-300);
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  .step-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--neon);
+    background: var(--neon-dim);
+    border-radius: 4px;
+    padding: 2px 7px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* ---- RIGHT PANEL (TIMER) ---- */
+  .timer-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    padding: 40px;
+  }
+
+  .mode-tabs {
+    display: flex;
+    gap: 4px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 4px;
+  }
+
+  .mode-btn {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    background: none;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: color 0.2s, background 0.2s;
+  }
+
+  .mode-btn.active {
+    background: var(--card);
+    color: var(--white);
+  }
+
+  .timer-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .timer-circle {
+    position: relative;
+    width: 280px;
+    height: 280px;
+  }
+
+  .timer-circle svg { transform: rotate(-90deg); }
+
+  .timer-circle .track {
+    fill: none;
+    stroke: var(--surface);
+    stroke-width: 6;
+  }
+
+  .timer-circle .progress {
+    fill: none;
+    stroke: var(--neon);
+    stroke-width: 6;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s linear, stroke 0.3s;
+  }
+
+  .timer-text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  .timer-time {
+    font-size: 64px;
+    font-weight: 700;
+    letter-spacing: -3px;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .timer-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--gray-500);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .session-dots {
+    display: flex;
+    gap: 8px;
+  }
+
+  .session-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+    transition: background 0.3s;
+  }
+
+  .session-dot.done { background: var(--neon); }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .btn-primary {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--black);
+    background: var(--neon);
+    border: none;
+    border-radius: 10px;
+    padding: 14px 48px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .btn-primary:hover { opacity: 0.85; }
+
+  .btn-secondary {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .btn-secondary:hover { color: var(--white); border-color: var(--border-hi); }
+
+  .timer-info {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--gray-400);
+    letter-spacing: 1px;
+    text-align: center;
+  }
+
+  /* ---- MOBILE ---- */
+  @media (max-width: 768px) {
+    body { overflow: auto; }
+
+    .app-layout {
+      grid-template-columns: 1fr;
+      height: auto;
+      overflow: visible;
+    }
+
+    .info-panel {
+      border-right: none;
+      border-bottom: 1px solid var(--border);
+      padding: 32px;
+    }
+
+    .timer-panel {
+      padding: 40px 24px 80px;
+    }
+  }
+</style>
+
+<div class="nav-wrap-outer">
+  <Nav />
+</div>
+
+<div class="app-layout">
+
+  <!-- LEFT: Info panel -->
+  <aside class="info-panel">
+    <a href="/apps" class="back-link">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M8.5 2.5L4 7L8.5 11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Back to Apps
+    </a>
+
+    <div class="info-title">
+      <div class="info-label">Productivity</div>
+      <h1>Pomodoro Timer</h1>
+    </div>
+
+    <div class="info-body">
+      <p>
+        The <strong>Pomodoro Technique</strong> was developed by Francesco Cirillo in the late 1980s while he was a university student. Struggling to focus, he reached for a tomato-shaped kitchen timer — <em>pomodoro</em> is Italian for tomato — and used it to time a 10-minute work session. That experiment became one of the most widely used productivity methods in the world.
+      </p>
+      <p>
+        The core idea is simple: work in focused, uninterrupted intervals, then take short breaks. This rhythm prevents mental fatigue, maintains concentration, and makes large tasks feel less overwhelming by breaking them into manageable chunks.
+      </p>
+
+      <div class="info-steps">
+        <div class="info-step">
+          <span class="step-num">01</span>
+          Choose a task and start a 25-minute focus session. No distractions.
+        </div>
+        <div class="info-step">
+          <span class="step-num">02</span>
+          When the timer ends, take a 5-minute short break. Step away from the screen.
+        </div>
+        <div class="info-step">
+          <span class="step-num">03</span>
+          Repeat. After 4 focus sessions, take a longer 15-minute break to fully recharge.
+        </div>
+        <div class="info-step">
+          <span class="step-num">04</span>
+          Reset and start the next cycle.
+        </div>
+      </div>
+
+      <p>
+        Research consistently shows that the brain works best in focused bursts with regular recovery time. The Pomodoro Technique enforces that rhythm — even when you don't feel like you need a break.
+      </p>
+    </div>
+  </aside>
+
+  <!-- RIGHT: Timer -->
+  <main class="timer-panel">
+
+    <div class="mode-tabs">
+      <button class="mode-btn active" data-mode="focus">Focus</button>
+      <button class="mode-btn" data-mode="short">Short Break</button>
+      <button class="mode-btn" data-mode="long">Long Break</button>
+    </div>
+
+    <div class="timer-display">
+      <div class="timer-circle">
+        <svg width="280" height="280" viewBox="0 0 280 280">
+          <circle class="track" cx="140" cy="140" r="120" />
+          <circle class="progress" id="progress-ring" cx="140" cy="140" r="120"
+            stroke-dasharray="753.98"
+            stroke-dashoffset="0"
+          />
+        </svg>
+        <div class="timer-text">
+          <span class="timer-time" id="timer-display">25:00</span>
+          <span class="timer-label" id="timer-label">Focus</span>
+        </div>
+      </div>
+
+      <div class="session-dots">
+        <div class="session-dot" id="dot-1"></div>
+        <div class="session-dot" id="dot-2"></div>
+        <div class="session-dot" id="dot-3"></div>
+        <div class="session-dot" id="dot-4"></div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button class="btn-secondary" id="reset-btn">Reset</button>
+      <button class="btn-primary" id="start-btn">Start</button>
+      <button class="btn-secondary" id="skip-btn">Skip</button>
+    </div>
+
+    <div class="timer-info" id="timer-info">
+      Complete 4 focus sessions to earn a long break.
+    </div>
+
+  </main>
+
+</div>
+
+<script>
+  const CIRCUMFERENCE = 2 * Math.PI * 120;
+
+  const modes: Record<string, { label: string; duration: number }> = {
+    focus: { label: 'Focus',       duration: 25 * 60 },
+    short: { label: 'Short Break', duration: 5  * 60 },
+    long:  { label: 'Long Break',  duration: 15 * 60 },
+  };
+
+  let currentMode = 'focus';
+  let timeLeft = modes.focus.duration;
+  let totalTime = modes.focus.duration;
+  let running = false;
+  let interval: ReturnType<typeof setInterval> | null = null;
+  let sessionsCompleted = 0;
+
+  const displayEl = document.getElementById('timer-display')!;
+  const labelEl   = document.getElementById('timer-label')!;
+  const ring      = document.getElementById('progress-ring') as unknown as SVGCircleElement;
+  const startBtn  = document.getElementById('start-btn')!;
+  const resetBtn  = document.getElementById('reset-btn')!;
+  const skipBtn   = document.getElementById('skip-btn')!;
+  const infoEl    = document.getElementById('timer-info')!;
+  const modeBtns  = document.querySelectorAll<HTMLButtonElement>('.mode-btn');
+  const dots      = document.querySelectorAll<HTMLElement>('.session-dot');
+
+  function format(seconds: number) {
+    const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+    const s = (seconds % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
+  }
+
+  function updateRing() {
+    ring.style.strokeDashoffset = String(CIRCUMFERENCE * (1 - timeLeft / totalTime));
+  }
+
+  function updateDots() {
+    dots.forEach((dot, i) => dot.classList.toggle('done', i < sessionsCompleted));
+  }
+
+  function updateInfo() {
+    if (currentMode !== 'focus') {
+      infoEl.textContent = 'Enjoy your break.';
+      return;
+    }
+    const remaining = 4 - (sessionsCompleted % 4);
+    infoEl.textContent = remaining === 1
+      ? 'One more session until your long break.'
+      : `${remaining} focus sessions until your long break.`;
+  }
+
+  function stop() {
+    if (interval) clearInterval(interval);
+    running = false;
+    startBtn.textContent = 'Start';
+  }
+
+  function setMode(mode: string) {
+    currentMode = mode;
+    timeLeft = modes[mode].duration;
+    totalTime = modes[mode].duration;
+    labelEl.textContent = modes[mode].label;
+    displayEl.textContent = format(timeLeft);
+    ring.style.stroke = mode === 'focus' ? 'var(--neon)' : '#3b82f6';
+    ring.style.strokeDashoffset = '0';
+    stop();
+    updateInfo();
+    modeBtns.forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+  }
+
+  function beep() {
+    try {
+      const ctx = new AudioContext();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.frequency.value = 880;
+      gain.gain.setValueAtTime(0.3, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.8);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.8);
+    } catch {}
+  }
+
+  function onComplete() {
+    stop();
+    beep();
+    if (currentMode === 'focus') {
+      sessionsCompleted = Math.min(sessionsCompleted + 1, 4);
+      updateDots();
+      if (sessionsCompleted % 4 === 0) {
+        setMode('long');
+        sessionsCompleted = 0;
+        updateDots();
+      } else {
+        setMode('short');
+      }
+    } else {
+      setMode('focus');
+    }
+  }
+
+  startBtn.addEventListener('click', () => {
+    if (running) { stop(); return; }
+    running = true;
+    startBtn.textContent = 'Pause';
+    interval = setInterval(() => {
+      timeLeft--;
+      displayEl.textContent = format(timeLeft);
+      updateRing();
+      if (timeLeft <= 0) onComplete();
+    }, 1000);
+  });
+
+  resetBtn.addEventListener('click', () => setMode(currentMode));
+  skipBtn.addEventListener('click', () => onComplete());
+  modeBtns.forEach(btn => btn.addEventListener('click', () => setMode(btn.dataset.mode!)));
+
+  updateRing();
+  updateInfo();
+</script>
+
+</Layout>

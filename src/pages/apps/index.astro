@@ -1,0 +1,125 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+
+const apps = [
+  {
+    name: 'Pomodoro Timer',
+    description: 'A clean focus timer built on the Pomodoro technique. 25 minutes of focused work, 5 minute breaks.',
+    href: '/apps/pomodoro',
+    tag: 'Productivity',
+  },
+];
+---
+
+<Layout
+  title="Apps — Komodo Labs"
+  description="Small, useful apps built by Komodo Labs. No accounts, no tracking, no backend — just tools that work."
+>
+<style>
+  .page-header {
+    padding: 72px 0 56px;
+    opacity: 0;
+    animation: fadeUp 0.5s ease 0.1s both;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--gray-500);
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .page-header h1 {
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: -1px;
+  }
+
+  .page-header p {
+    font-size: 15px;
+    color: var(--gray-400);
+    font-weight: 300;
+    margin-top: 12px;
+  }
+
+  .apps {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-bottom: 100px;
+    opacity: 0;
+    animation: fadeUp 0.5s ease 0.2s both;
+  }
+
+  .app-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 32px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .app-row:first-child { border-top: 1px solid var(--border); }
+
+  .app-row:hover .app-name { color: var(--neon); }
+
+  .app-name {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 6px;
+    transition: color 0.2s;
+  }
+
+  .app-desc {
+    font-size: 13.5px;
+    color: var(--gray-400);
+    font-weight: 300;
+  }
+
+  .app-tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    padding: 4px 9px;
+    border-radius: 5px;
+    background: var(--bg);
+    color: var(--gray-400);
+    border: 1px solid var(--border);
+    white-space: nowrap;
+  }
+</style>
+
+<div class="wrapper">
+
+  <Nav />
+
+  <div class="page-header">
+    <div class="section-label">Tools</div>
+    <h1>Apps</h1>
+    <p>Small, useful tools. No accounts, no tracking, no backend.</p>
+  </div>
+
+  <div class="apps">
+    {apps.map((app) => (
+      <a href={app.href} class="app-row">
+        <div>
+          <div class="app-name">{app.name}</div>
+          <div class="app-desc">{app.description}</div>
+        </div>
+        <span class="app-tag">{app.tag}</span>
+      </a>
+    ))}
+  </div>
+
+  <Footer />
+
+</div>
+
+</Layout>
