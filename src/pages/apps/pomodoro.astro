@@ -28,6 +28,34 @@ import Layout from '../../layouts/Layout.astro';
     gap: 32px;
   }
 
+  .app-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .app-logo img {
+    width: 28px;
+    height: 28px;
+    border-radius: 5px;
+    object-fit: cover;
+  }
+
+  .app-logo span {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--white);
+    letter-spacing: 0.5px;
+  }
+
+  .app-logo span em {
+    color: var(--neon);
+    font-style: normal;
+  }
+
   .back-link {
     display: inline-flex;
     align-items: center;
@@ -289,6 +317,11 @@ import Layout from '../../layouts/Layout.astro';
 
   <!-- LEFT: Info panel -->
   <aside class="info-panel">
+    <a href="/" class="app-logo">
+      <img src="/logo.jpg" alt="Komodo Labs" />
+      <span>Komodo Labs<em>.</em></span>
+    </a>
+
     <a href="/apps" class="back-link">
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
         <path d="M8.5 2.5L4 7L8.5 11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -297,7 +330,6 @@ import Layout from '../../layouts/Layout.astro';
     </a>
 
     <div class="info-title">
-      <div class="info-label">Productivity</div>
       <h1>Pomodoro Timer</h1>
     </div>
 
