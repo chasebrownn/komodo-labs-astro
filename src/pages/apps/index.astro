@@ -9,6 +9,7 @@ const apps = [
     description: 'A clean focus timer built on the Pomodoro technique. 25 minutes of focused work, 5 minute breaks.',
     href: '/apps/pomodoro',
     tag: 'Productivity',
+    image: '/apps/pomodoro.png',
   },
 ];
 ---
@@ -47,41 +48,61 @@ const apps = [
   }
 
   .apps {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
     margin-bottom: 100px;
     opacity: 0;
     animation: fadeUp 0.5s ease 0.2s both;
   }
 
-  .app-row {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
-    gap: 32px;
-    padding: 28px 0;
-    border-bottom: 1px solid var(--border);
+  .app-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
     text-decoration: none;
-    transition: background 0.2s;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.2s, transform 0.2s;
   }
 
-  .app-row:first-child { border-top: 1px solid var(--border); }
+  .app-card:hover {
+    border-color: var(--border-hi);
+    transform: translateY(-2px);
+  }
 
-  .app-row:hover .app-name { color: var(--neon); }
+  .app-card:hover .app-name { color: var(--neon); }
+
+  .app-image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .app-body {
+    padding: 20px 22px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+  }
+
+  .app-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
 
   .app-name {
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 600;
     color: var(--white);
-    margin-bottom: 6px;
     transition: color 0.2s;
-  }
-
-  .app-desc {
-    font-size: 13.5px;
-    color: var(--gray-400);
-    font-weight: 300;
   }
 
   .app-tag {
@@ -93,6 +114,14 @@ const apps = [
     color: var(--gray-400);
     border: 1px solid var(--border);
     white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .app-desc {
+    font-size: 13.5px;
+    color: var(--gray-400);
+    font-weight: 300;
+    line-height: 1.6;
   }
 </style>
 
@@ -108,12 +137,15 @@ const apps = [
 
   <div class="apps">
     {apps.map((app) => (
-      <a href={app.href} class="app-row">
-        <div>
-          <div class="app-name">{app.name}</div>
+      <a href={app.href} class="app-card">
+        <img src={app.image} alt={app.name} class="app-image" />
+        <div class="app-body">
+          <div class="app-header">
+            <div class="app-name">{app.name}</div>
+            <span class="app-tag">{app.tag}</span>
+          </div>
           <div class="app-desc">{app.description}</div>
         </div>
-        <span class="app-tag">{app.tag}</span>
       </a>
     ))}
   </div>
