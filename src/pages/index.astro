@@ -9,16 +9,6 @@ const recentPosts = (await getCollection('blog'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 3);
 
-function timeAgo(date: Date) {
-  const utcDate = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
-  const days = Math.floor((Date.now() - utcDate) / (1000 * 60 * 60 * 24));
-  if (days === 0) return 'Today';
-  if (days < 30) return `${days}d ago`;
-  const months = Math.floor(days / 30);
-  if (months < 12) return `${months}mo ago`;
-  const years = Math.floor(days / 365);
-  return `${years}y ago`;
-}
 ---
 
 <Layout
@@ -885,7 +875,7 @@ function timeAgo(date: Date) {
     <div class="blog-list">
       {recentPosts.map((post) => (
         <a href={`/blog/${post.id}`} class="blog-row">
-          <span class="blog-date">{timeAgo(post.data.date)} | {Math.ceil(post.body.split(/\s+/).length / 200)} min read</span>
+          <span class="blog-date"><span class="time-ago" data-date={post.data.date.toISOString()}></span> | {Math.ceil(post.body.split(/\s+/).length / 200)} min read</span>
           <div class="blog-text">
             <div class="blog-title">{post.data.title}</div>
             <div class="blog-desc">{post.data.description}</div>
@@ -939,5 +929,17 @@ function timeAgo(date: Date) {
   <Footer />
 
 </div>
+
+<script>
+  document.querySelectorAll('.time-ago').forEach((el) => {
+    const date = new Date(el.getAttribute('data-date')!);
+    const utcDate = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
+    const days = Math.floor((Date.now() - utcDate) / (1000 * 60 * 60 * 24));
+    if (days === 0) el.textContent = 'Today';
+    else if (days < 30) el.textContent = `${days}d ago`;
+    else if (days < 365) el.textContent = `${Math.floor(days / 30)}mo ago`;
+    else el.textContent = `${Math.floor(days / 365)}y ago`;
+  });
+</script>
 
 </Layout>
