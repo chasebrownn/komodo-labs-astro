@@ -3,7 +3,7 @@
     "name": "Telcoin",
     "category": "Fintech / Blockchain Infrastructure",
     "description": "Telcoin is a multinational fintech and blockchain company building regulated digital-cash infrastructure for global payments, remittances, banking, and decentralized finance. Its ecosystem combines the Telcoin Wallet, bank-issued stablecoins, mobile-network partnerships, and an Ethereum-compatible settlement network to make on-chain financial services accessible worldwide.",
-    "whatWeDid": "Our team built, tested, and deployed the eUSD and stablecoin infrastructure that migrates real fiat currency into blockchain-native stables, engineered the upgraded smart contract for the legacy TEL token, and delivered the cross-chain infrastructure that lets every stablecoin and TEL bridge between blockchains — plus the migration path for legacy investors to upgrade to the new TEL primitive.",
+    "whatWeDid": "Our team built, tested, and deployed the eUSD and stablecoin infrastructure that brings real fiat currency on-chain, engineered the upgraded smart contract for the legacy TEL token, and delivered the cross-chain infrastructure that lets every stablecoin and TEL bridge between blockchains. We also built the migration path for legacy investors to upgrade to the new TEL primitive.",
     "stats": [
       { "value": "$6.4B+", "label": "Peak market cap" },
       { "value": "100K+", "label": "TEL holders" },
@@ -19,8 +19,8 @@
   {
     "name": "A365 Suite",
     "category": "AI / Industrial IoT",
-    "description": "Autonomous365 is a custom software suite supporting Minerva devices in collecting and processing empirical emissions data — enabling remote operations management, advanced Adaptive Operational Intelligence (aOI), and seamless integration with CleanConnect.ai products. Sensory, Luminary, Symmetry, ProveZero, EnerGPT, Onboard Compute Models, Leakfinder, and Vulcan are all derivatives.",
-    "whatWeDid": "Our team owned customer success across dozens of companies — from small producers with two cameras to supermajors running thousands — maintaining client relationships through weekly project-management touchpoints, feature and bugfix pipelines, and upsell programs. We established the SOPs that enable at-scale hardware utilization, managed on-site installs, and worked hands-on across every subsystem to continuously improve the platform.",
+    "description": "Autonomous365 is a custom software suite that supports Minerva devices in collecting and processing empirical emissions data. It enables remote operations management, advanced Adaptive Operational Intelligence (aOI), and easy integration with CleanConnect.ai products. Sensory, Luminary, Symmetry, ProveZero, EnerGPT, Onboard Compute Models, Leakfinder, and Vulcan are all derivatives.",
+    "whatWeDid": "Our team owned customer success across dozens of companies, from small producers with two cameras to supermajors running thousands. We maintained client relationships through weekly project management calls, feature request and bugfix reporting, and upsell programs. We also established the SOPs that make hardware usable at scale, managed on-site installs, and worked across every subsystem to keep improving the platform.",
     "stats": [
       { "value": "8-figure", "label": "Yearly contract revenue" },
       { "value": "1,000s", "label": "Cameras deployed worldwide" },
@@ -33,8 +33,8 @@
   {
     "name": "Enterprise Route Guidance Platform",
     "category": "Enterprise / Logistics",
-    "description": "A nationwide route guidance platform for a Fortune 300 logistics operation moving 50,000+ service stops every single day across 200+ divisions. An Angular web app with live GIS visualization backed by 14+ serverless APIs — replacing an entirely paper-based process for one of the largest residential fleets in the country.",
-    "whatWeDid": "Our team built it from the ground up: the full Angular UI with NgRx state management, Esri ArcGIS live mapping, and street-segment completion tracking, plus the entire serverless backend — create, approve, hold, batch-create, GIS-polling, and segment-completion services — with real-time route visualization throughout.",
+    "description": "A nationwide route guidance platform for a Fortune 300 logistics operation moving 50,000+ service stops every single day across 200+ divisions. An Angular web app with live GIS visualization backed by 14+ serverless APIs, replacing an entirely paper-based process for one of the largest residential fleets in the country.",
+    "whatWeDid": "Our team built it from the ground up: the full Angular UI with NgRx state management, Esri ArcGIS live mapping, and street-segment completion tracking, plus the entire serverless backend covering create, approve, hold, batch-create, GIS-polling, and segment-completion services, with real-time route visualization throughout.",
     "stats": [
       { "value": "50,000+", "label": "Daily service stops tracked" },
       { "value": "200+", "label": "Divisions nationwide" },
@@ -47,8 +47,8 @@
   {
     "name": "re.al Chain",
     "category": "Layer 2 / DeFi",
-    "description": "re.al is a modular Ethereum Layer-2 scaling platform built on Arbitrum Orbit, dedicated to transforming the landscape of DeFi and RWAs — lightning-fast transactions, drastically reduced gas costs, and enhanced throughput, all while maintaining the rigorous security standards of the Ethereum mainnet.",
-    "whatWeDid": "Our team built and deployed the infrastructure for the L2 to operate as a DeFi chain — money market, DEX, and oracle primitives — and built the governance protocol for the native cryptocurrency using Curve Finance's battle-tested vote-escrow (ve) governance pattern.",
+    "description": "re.al is a modular Ethereum Layer-2 built on Arbitrum Orbit and focused on DeFi and real-world assets. It delivers fast transactions, low gas costs, and high throughput while keeping the security guarantees of the Ethereum mainnet.",
+    "whatWeDid": "Our team built and deployed the infrastructure for the L2 to operate as a DeFi chain, including money market, DEX, and oracle primitives. We also built the governance protocol for the native cryptocurrency using Curve Finance's vote-escrow (ve) governance pattern.",
     "stats": [
       { "value": "$100M", "label": "Peak TVL" },
       { "value": "L2", "label": "Full DeFi chain infrastructure" }
@@ -62,8 +62,8 @@
   {
     "name": "ProveZero",
     "category": "Blockchain / Energy Data",
-    "description": "ProveZero is a multi-component system for energy producers and traders moving from fossil-based energy toward sustainable production — transforming empirical energy data into publicly tradeable blockchain assets and providing tangible proof of net-zero commitments.",
-    "whatWeDid": "Our team developed the blockchain solution that onboards oil and gas production data on-chain for energy trading — Solidity smart contracts, the MVP data pipeline, and the NFT system. As the platform scaled, we managed data-provider onboarding, established audit and QC SOPs for operation at scale, and worked directly with chemical engineers to guarantee data quality through the entire system.",
+    "description": "ProveZero is a multi-component system for energy producers and traders moving from fossil-based energy toward sustainable production. It transforms empirical energy data into publicly tradeable blockchain assets and gives companies tangible proof of their net-zero commitments.",
+    "whatWeDid": "Our team developed the blockchain solution that onboards oil and gas production data on-chain for energy trading: Solidity smart contracts, the MVP data pipeline, and the NFT system. As the platform scaled, we managed data provider onboarding, established audit and QC SOPs for operation at scale, and worked directly with chemical engineers to guarantee data quality through the entire system.",
     "stats": [
       { "value": "500+", "label": "Oil & gas facilities on-chain" },
       { "value": "1,000s", "label": "Data points ingested hourly" },
@@ -76,8 +76,8 @@
   {
     "name": "AI Contamination Detection & Automated Billing Engine",
     "category": "AI / Event-Driven Systems",
-    "description": "A revenue-generating, event-driven AI pipeline of 34 serverless functions that ingests computer-vision detections from cameras mounted on a nationwide truck fleet, processes video and imagery at scale, validates charges with geospatial analysis, and automates the residential contamination billing workflow end-to-end — turning AI detections directly into billed revenue.",
-    "whatWeDid": "Our team built the core ingress and reprocessing flows, the media processing pipeline, charge validation logic, geospatial polygon analysis, automated letter-printing and email workflows, DynamoDB stream triggers, and unbilled-homes auditing — with false-positive filtering built in to cut customer disputes while protecting the revenue stream.",
+    "description": "A revenue-generating, event-driven AI pipeline of 34 serverless functions that ingests computer vision detections from cameras mounted on a nationwide truck fleet, processes video and imagery at scale, validates charges with geospatial analysis, and automates the residential contamination billing workflow end to end. This is the system that turns AI detections directly into billed revenue.",
+    "whatWeDid": "Our team built the core ingress and reprocessing flows, the media processing pipeline, charge validation logic, geospatial polygon analysis, automated letter printing and email workflows, DynamoDB stream triggers, and unbilled-homes auditing, with false-positive filtering built in to cut customer disputes while protecting the revenue stream.",
     "stats": [
       { "value": "34", "label": "Event-driven Lambda functions" },
       { "value": "Hours → seconds", "label": "Review time per route" },
@@ -90,8 +90,8 @@
   {
     "name": "Tangible",
     "category": "RWA / Tokenization",
-    "description": "Tangible is a real-world asset tokenization platform that brings income-producing real estate and other physical assets on-chain — enabling fractional ownership, automated yield distribution, and transparent asset management through blockchain-based investment products.",
-    "whatWeDid": "Our team designed and deployed the smart contract technology used to tokenize real-world income-producing assets, and created the first blockchain REIT contract — opening real estate investment to investors from every income bracket through blockchain technology.",
+    "description": "Tangible is a real-world asset tokenization platform that brings income-producing real estate and other physical assets on-chain. It enables fractional ownership, automated yield distribution, and transparent asset management through blockchain-based investment products.",
+    "whatWeDid": "Our team designed and deployed the smart contract technology used to tokenize real-world income-producing assets and created the first blockchain REIT contract, opening real estate investment to investors from every income bracket.",
     "stats": [
       { "value": "$80M", "label": "Peak TVL" },
       { "value": "200", "label": "Properties tokenized" },
@@ -106,7 +106,7 @@
   {
     "name": "Mainstreet",
     "category": "DeFi / Yield",
-    "description": "Main Street revolutionizes yield generation on-chain by harnessing delta-neutral options box spread strategies and democratizing access through a multi-token system.",
+    "description": "Main Street generates yield on-chain using delta-neutral options box spread strategies and opens access to those returns through a multi-token system.",
     "whatWeDid": "Our team developed and deployed the stablecoins, cross-chain infrastructure, ERC-4626 yield vaults, and money managers powering the protocol.",
     "stats": [
       { "value": "$80M", "label": "Peak TVL" }
@@ -120,7 +120,7 @@
   {
     "name": "Nationwide Fleet Maintenance Modernization",
     "category": "Enterprise Integration / Legacy Migration",
-    "description": "A mission-critical, bidirectional integration between a Fortune 300 logistics platform and Oracle Enterprise Asset Management — replacing a decades-old legacy system division by division across the entire country, with zero tolerance for downtime on a fleet that can't stop running.",
+    "description": "A mission-critical, bidirectional integration between a Fortune 300 logistics platform and Oracle Enterprise Asset Management, replacing a decades-old legacy system division by division across the entire country, with zero tolerance for downtime on a fleet that can't stop running.",
     "whatWeDid": "Our team engineered the full integration: FIFO queue-based vehicle asset syncing, 5-minute heartbeat health monitoring, vehicle condition report processing (roadcalls, defects, meter readings, fuel), mechanic signature PDF storage, real-time GraphQL subscription alerts for system-down events, and a feature-flag-controlled rollout that cut over one division at a time with graceful fallback to legacy.",
     "stats": [
       { "value": "99.9%", "label": "Uptime through live migration" },
@@ -134,8 +134,8 @@
   {
     "name": "MetaRaft",
     "category": "Blockchain / Social Impact",
-    "description": "More than an attribute NFT project — built at the peak of Crypto Summer, MetaRaft paired smart contracts with an interactive UI to run on-chain charity raffles benefiting hospitalized children and displaced families through the MetaRaft Foundation.",
-    "whatWeDid": "Our team worked with the charity organizer to guarantee visible fund collection, provably random winner selection, and on-chain payout — a seamless, fully transparent process from start to finish, before handing the system over to the charity.",
+    "description": "Built at the peak of Crypto Summer, MetaRaft was more than an attribute NFT project. The team paired smart contracts with an interactive UI to run on-chain charity raffles benefiting hospitalized children and displaced families through the MetaRaft Foundation.",
+    "whatWeDid": "Our team worked with the charity organizer to guarantee visible fund collection, provably random winner selection, and on-chain payout, keeping the process fully transparent from start to finish before handing the system over to the charity.",
     "stats": [
       { "value": "~$100K", "label": "Raised for charity" },
       { "value": "100%", "label": "On-chain transparency" }
@@ -147,8 +147,8 @@
   {
     "name": "Flare Naming Service",
     "category": "Blockchain / Infrastructure",
-    "description": "A decentralized, permissionless, and fully on-chain domain name system on the Flare Network — with a built-in website builder tied to each domain.",
-    "whatWeDid": "Forking ENS, our team introduced a user-friendly decentralized application tailored for acquiring .FLR domains. The platform simplifies the domain purchase process, facilitates token transfers between users' domains, and lets users craft personalized websites through the built-in website builder.",
+    "description": "A decentralized, permissionless, and fully on-chain domain name system on the Flare Network, with a built-in website builder tied to each domain.",
+    "whatWeDid": "Forking ENS, our team built a user-friendly decentralized application for acquiring .FLR domains. The platform simplifies the domain purchase process, supports token transfers between users' domains, and lets users build personalized websites with the built-in website builder.",
     "stats": [
       { "value": "100%", "label": "On-chain domain system" }
     ],
