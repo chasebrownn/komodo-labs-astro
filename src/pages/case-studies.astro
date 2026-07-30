@@ -1,0 +1,346 @@
+---
+import caseStudies from '../data/case-studies.json';
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import CTA from '../components/CTA.astro';
+
+const headline = [
+  { value: '$6.4B+', label: 'Peak market cap secured' },
+  { value: '$260M+', label: 'Peak TVL across DeFi protocols' },
+  { value: '50K+', label: 'Daily service stops orchestrated' },
+  { value: '8-figure', label: 'Annual revenue systems' },
+];
+---
+
+<Layout
+  title="Case Studies — Komodo Labs"
+  description="Production systems our team has designed, built, and scaled — $6.4B+ peak market cap, $260M+ peak TVL, and Fortune 300 infrastructure across blockchain, AI, and enterprise."
+>
+<style>
+
+  /* PAGE HEADER */
+  .page-header {
+    padding: 72px 0 56px;
+    opacity: 0;
+    animation: fadeUp 0.5s ease 0.1s both;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--gray-400);
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .page-header h1 {
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    margin-bottom: 18px;
+  }
+
+  .page-intro {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--gray-300);
+    line-height: 1.7;
+    max-width: 620px;
+  }
+
+  /* HEADLINE STATS */
+  .headline-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.5s ease 0.2s both;
+  }
+
+  .headline-stat {
+    padding: 36px 28px;
+  }
+
+  .headline-stat + .headline-stat {
+    border-left: 1px solid var(--border);
+  }
+
+  .headline-stat .value {
+    font-size: clamp(30px, 3.4vw, 44px);
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    color: var(--neon);
+    line-height: 1.1;
+    margin-bottom: 10px;
+    white-space: nowrap;
+  }
+
+  .headline-stat .label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--gray-400);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    line-height: 1.6;
+  }
+
+  /* CASE STUDIES */
+  .case {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 48px;
+    padding: 72px 0;
+    border-bottom: 1px solid var(--border);
+    opacity: 0;
+    animation: fadeUp 0.5s ease 0.25s both;
+  }
+
+  .case:last-of-type { border-bottom: none; }
+
+  .case-meta { padding-top: 6px; }
+
+  .case-index {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--neon);
+    letter-spacing: 2px;
+    margin-bottom: 14px;
+  }
+
+  .case-category {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--gray-400);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    line-height: 1.8;
+  }
+
+  .case-body h2 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.8px;
+    margin-bottom: 18px;
+    color: var(--white);
+  }
+
+  .case-desc {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--gray-300);
+    line-height: 1.8;
+    margin-bottom: 28px;
+    max-width: 720px;
+  }
+
+  .case-block-label {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--gray-500);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .case-what {
+    font-size: 14.5px;
+    font-weight: 300;
+    color: var(--gray-300);
+    line-height: 1.8;
+    margin-bottom: 36px;
+    max-width: 720px;
+  }
+
+  /* STATS */
+  .case-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, max-content));
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  .case-stat {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px 26px;
+    min-width: 180px;
+    transition: border-color 0.3s;
+  }
+
+  .case:hover .case-stat { border-color: var(--border-hi); }
+
+  .case-stat .value {
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: var(--white);
+    line-height: 1.15;
+    margin-bottom: 8px;
+    white-space: nowrap;
+  }
+
+  .case-stat .label {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--gray-400);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    line-height: 1.6;
+  }
+
+  /* TAGS + LINKS */
+  .case-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    padding: 4px 9px;
+    border-radius: 5px;
+    background: var(--bg);
+    color: var(--gray-300);
+    border: 1px solid var(--border);
+    white-space: nowrap;
+  }
+
+  .tag.tech {
+    color: var(--gray-500);
+    border-radius: 4px;
+  }
+
+  .case-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin-top: 24px;
+  }
+
+  .case-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--neon);
+    letter-spacing: 0.5px;
+    transition: opacity 0.2s;
+  }
+
+  .case-link:hover { opacity: 0.75; }
+
+  @media (max-width: 1024px) {
+    .headline-stats { grid-template-columns: 1fr 1fr; }
+    .headline-stat:nth-child(3) { border-left: none; }
+    .headline-stat:nth-child(n+3) { border-top: 1px solid var(--border); }
+  }
+
+  @media (max-width: 768px) {
+    .case {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      padding: 52px 0;
+    }
+
+    .case-meta {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      padding-top: 0;
+    }
+
+    .case-index { margin-bottom: 0; }
+
+    .case-stats { grid-template-columns: 1fr 1fr; }
+    .case-stat { min-width: 0; }
+    .case-stat .value { font-size: 24px; white-space: normal; }
+  }
+
+  @media (max-width: 520px) {
+    .headline-stats { grid-template-columns: 1fr; }
+    .headline-stat + .headline-stat { border-left: none; border-top: 1px solid var(--border); }
+    .case-stats { grid-template-columns: 1fr; }
+  }
+</style>
+
+<div class="wrapper">
+
+  <Nav />
+
+  <div class="page-header">
+    <div class="section-label">Work</div>
+    <h1>Case Studies</h1>
+    <p class="page-intro">
+      Production systems our team has designed, built, and scaled — from stablecoin infrastructure and Layer-2 chains to Fortune 300 logistics platforms and AI pipelines that turn detections into revenue.
+    </p>
+  </div>
+
+  <div class="headline-stats">
+    {headline.map((s) => (
+      <div class="headline-stat">
+        <div class="value">{s.value}</div>
+        <div class="label">{s.label}</div>
+      </div>
+    ))}
+  </div>
+
+  {caseStudies.map((cs, i) => (
+    <article class="case">
+      <div class="case-meta">
+        <div class="case-index">{String(i + 1).padStart(2, '0')} &mdash;</div>
+        <div class="case-category">{cs.category}</div>
+      </div>
+      <div class="case-body">
+        <h2>{cs.name}</h2>
+        <p class="case-desc">{cs.description}</p>
+
+        <div class="case-block-label">What we did</div>
+        <p class="case-what">{cs.whatWeDid}</p>
+
+        {cs.stats.length > 0 && (
+          <div class="case-stats">
+            {cs.stats.map((s) => (
+              <div class="case-stat">
+                <div class="value">{s.value}</div>
+                <div class="label">{s.label}</div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <div class="case-tags">
+          {cs.topics.map((t) => <span class="tag">{t}</span>)}
+        </div>
+        <div class="case-tags">
+          {cs.technologies.map((t) => <span class="tag tech">{t}</span>)}
+        </div>
+
+        {cs.links.length > 0 && (
+          <div class="case-links">
+            {cs.links.map((l) => (
+              <a href={l.href} target="_blank" rel="noopener noreferrer" class="case-link">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                {l.label} &rarr;
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+    </article>
+  ))}
+
+  <CTA tagline="From stablecoin infrastructure to Fortune 300 platforms — if it needs to scale, our team has shipped it. Let's talk about what you're building." />
+
+  <Footer />
+
+</div>
+
+</Layout>
