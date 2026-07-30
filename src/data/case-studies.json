@@ -132,6 +132,33 @@
     "links": []
   },
   {
+    "name": "Enterprise PTO Management Platform",
+    "category": "Enterprise / Backend Architecture",
+    "description": "A development takeover of a stalled internal workforce management platform, rebuilt from the ground up. The application manages employee time-off requests, approvals, documentation, and administrative workflows for small to mid-sized organizations operating under complex hierarchies.",
+    "whatWeDid": "Our team led technical delivery of the project: redesigning the backend architecture, rebuilding major portions of the application, and reprioritizing features to maximize business value while still meeting fixed deadlines. We reduced infrastructure overhead by optimizing dozens of database-heavy endpoints, strengthened application security, and established automated CI/CD pipelines for reliable deployments.",
+    "stats": [
+      { "value": "99.4%", "label": "Peak API & database speedup" },
+      { "value": "Dozens", "label": "Security vulnerabilities resolved" },
+      { "value": "Stalled → shipped", "label": "After several quarters stuck" }
+    ],
+    "topics": ["Enterprise Software", "Backend Architecture", "Performance", "Security", "DevOps"],
+    "technologies": ["Python", "Django", "Django REST Framework", "PostgreSQL", "GitLab CI/CD", "Docker"],
+    "links": []
+  },
+  {
+    "name": "Data Center Site Evaluation Platform",
+    "category": "Enterprise / Data Visualization",
+    "description": "An internal enterprise platform for identifying, evaluating, and managing potential data center sites. It handles project data, authentication, file storage, and operational workflows, including a live nationwide power outage dashboard.",
+    "whatWeDid": "Our team developed several core platform capabilities including authentication, project-based data isolation, and internal file management, and carried out large-scale refactoring to improve maintainability and performance. We also built an interactive heat map displaying live power outages across the United States on a full-stack Angular and Django architecture.",
+    "stats": [
+      { "value": "50-state", "label": "Live power outage coverage" },
+      { "value": "Multiple", "label": "Enterprise modules delivered" }
+    ],
+    "topics": ["Full Stack", "Data Visualization", "Enterprise Software"],
+    "technologies": ["Angular", "TypeScript", "Python", "Django REST Framework"],
+    "links": []
+  },
+  {
     "name": "MetaRaft",
     "category": "Blockchain / Social Impact",
     "description": "Built at the peak of Crypto Summer, MetaRaft was more than an attribute NFT project. The team paired smart contracts with an interactive UI to run on-chain charity raffles benefiting hospitalized children and displaced families through the MetaRaft Foundation.",
@@ -155,5 +182,21 @@
     "topics": ["Blockchain"],
     "technologies": ["Solidity", "AWS", "NodeJS", "Cloudflare"],
     "links": []
+  },
+  {
+    "name": "Custom Websites for Local Businesses",
+    "category": "Web Design / Frontend",
+    "description": "High-performance marketing websites designed and developed for local service businesses, built custom rather than from templates, with a focus on conversion, usability, accessibility, and long-term maintainability.",
+    "whatWeDid": "Our team worked directly with business owners to understand their goals, designed scalable design systems, developed responsive websites, and tuned technical performance to maximize search visibility and user experience.",
+    "stats": [
+      { "value": "95–98", "label": "Lighthouse mobile performance" },
+      { "value": "Top 1%", "label": "Of mobile web performance" },
+      { "value": "100%", "label": "Custom design per business" }
+    ],
+    "topics": ["Web Design", "Frontend", "UX", "SEO", "Performance"],
+    "technologies": ["Astro", "HTML", "SCSS", "JavaScript", "Figma"],
+    "links": [
+      { "label": "willlordwebdesigns.com", "href": "https://willlordwebdesigns.com/" }
+    ]
   }
 ]
