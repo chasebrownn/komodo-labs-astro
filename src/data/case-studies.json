@@ -23,12 +23,14 @@
     "whatWeDid": "Our team owned customer success across dozens of companies, from small producers with two cameras to supermajors running thousands. We maintained client relationships through weekly project management calls, feature request and bugfix reporting, and upsell programs. We also established the SOPs that make hardware usable at scale, managed on-site installs, and worked across every subsystem to keep improving the platform.",
     "stats": [
       { "value": "8-figure", "label": "Yearly contract revenue" },
-      { "value": "1,000s", "label": "Cameras deployed worldwide" },
+      { "value": "1,000+", "label": "Cameras deployed worldwide" },
       { "value": "~1,000", "label": "Daily users" }
     ],
     "topics": ["AI", "Regulatory & Compliance", "Customer Success", "Hardware", "Scalability"],
     "technologies": ["AI/ML", "Computer Vision", "Edge Compute"],
-    "links": []
+    "links": [
+      { "label": "cleanconnect.ai", "href": "https://cleanconnect.ai/autonomous365-oil-and-gas-monitoring/" }
+    ]
   },
   {
     "name": "Enterprise Route Guidance Platform",
@@ -66,12 +68,14 @@
     "whatWeDid": "Our team developed the blockchain solution that onboards oil and gas production data on-chain for energy trading: Solidity smart contracts, the MVP data pipeline, and the NFT system. As the platform scaled, we managed data provider onboarding, established audit and QC SOPs for operation at scale, and worked directly with chemical engineers to guarantee data quality through the entire system.",
     "stats": [
       { "value": "500+", "label": "Oil & gas facilities on-chain" },
-      { "value": "1,000s", "label": "Data points ingested hourly" },
+      { "value": "1,000+", "label": "Data points ingested hourly" },
       { "value": "7-figure", "label": "Profit per customer" }
     ],
     "topics": ["Blockchain", "AI", "ESG", "Regulatory & Compliance", "Big Data", "System Architecture"],
     "technologies": ["Solidity", "Data Pipelines", "NFT Systems"],
-    "links": []
+    "links": [
+      { "label": "cleanconnect.ai", "href": "https://cleanconnect.ai/provezero/" }
+    ]
   },
   {
     "name": "AI Contamination Detection & Automated Billing Engine",
@@ -169,7 +173,9 @@
     ],
     "topics": ["Blockchain", "Full Stack", "Payment Processing", "Randomization"],
     "technologies": ["Solidity", "React"],
-    "links": []
+    "links": [
+      { "label": "metaraft.io", "href": "https://www.metaraft.io/" }
+    ]
   },
   {
     "name": "Flare Naming Service",
@@ -182,21 +188,5 @@
     "topics": ["Blockchain"],
     "technologies": ["Solidity", "AWS", "NodeJS", "Cloudflare"],
     "links": []
-  },
-  {
-    "name": "Custom Websites for Local Businesses",
-    "category": "Web Design / Frontend",
-    "description": "High-performance marketing websites designed and developed for local service businesses, built custom rather than from templates, with a focus on conversion, usability, accessibility, and long-term maintainability.",
-    "whatWeDid": "Our team worked directly with business owners to understand their goals, designed scalable design systems, developed responsive websites, and tuned technical performance to maximize search visibility and user experience.",
-    "stats": [
-      { "value": "95–98", "label": "Lighthouse mobile performance" },
-      { "value": "Top 1%", "label": "Of mobile web performance" },
-      { "value": "100%", "label": "Custom design per business" }
-    ],
-    "topics": ["Web Design", "Frontend", "UX", "SEO", "Performance"],
-    "technologies": ["Astro", "HTML", "SCSS", "JavaScript", "Figma"],
-    "links": [
-      { "label": "willlordwebdesigns.com", "href": "https://willlordwebdesigns.com/" }
-    ]
   }
 ]
